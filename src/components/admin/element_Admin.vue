@@ -1,15 +1,15 @@
 <template>
   <div class="element">
     <el-table :data="elements" style="width: 100%" border>
-      <el-table-column label="标题" width="120" align="center">
+      <el-table-column label="标题" width="110" align="center">
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.title }}</span>
+          <span>{{ scope.row.title }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="类别" width="100" align="center">
+      <el-table-column label="类别" width="150" align="center">
         <template slot-scope="scope">
           <el-popover trigger="hover" placement="top">
-            <span>描述: {{ scope.row.type.type_desc }}</span>
+            <span>{{ scope.row.type.type_name}}: {{ scope.row.type.type_desc }}</span>
             <div slot="reference" class="name-wrapper">
               <el-tag size="medium">{{ scope.row.type.type_name }}</el-tag>
             </div>
@@ -27,7 +27,7 @@
           <span v-else>未填写</span>
         </template>
       </el-table-column>
-      <el-table-column label="Github" width="300" align="center">
+      <el-table-column label="Github" width="180" align="center">
         <template slot-scope="scope">
           <a
             :href="scope.row.github"
@@ -75,7 +75,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="类型" prop="type" :rules="{required: true,message:'请选择类型',trigger: 'blur'}">
+              <el-form-item label="类型" prop="type" :rules="{required: true,message:'请选择类型',trigger: 'change'}">
                 <el-select v-model="elementForm.type" placeholder="请选择类型">
                   <el-option
                     v-for="(item,id) in options"

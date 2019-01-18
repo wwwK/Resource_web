@@ -11,8 +11,8 @@
           <span style="margin-left: 10px">{{ scope.row.number }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="描述" align="left">
-        <template slot-scope="scope">
+      <el-table-column label="描述" align="left" >
+        <template slot-scope="scope" >
           <span style="margin-left: 10px">{{ scope.row.type_desc }}</span>
         </template>
       </el-table-column>
