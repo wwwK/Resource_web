@@ -1,4 +1,4 @@
-<template>
+<template>  
   <div class="menu">
     <el-tabs v-model="activeName">
       <el-tab-pane label="资源管理" name="elements">
@@ -18,6 +18,7 @@ import Classtifyadmin from './classfiy_Admin'
 import axios from "axios";
 
 export default {
+  //测试提交到远程
   data: () => ({
     activeName: "elements", //默认选择展开第一个选项卡
     url: "http://localhost:1337/",
