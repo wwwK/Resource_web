@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="content">
-      <div v-for="(type,index) in navigation.options" :key="index">
+      <div v-for="(type,index) in navigation.options" :key="index" class="type-model">
         <p class="type-title">{{type.type_name}}</p>
         <div
           v-for="(item, key) in elements"
@@ -33,7 +33,7 @@
           class="elements"
           v-show="(item.type.type_name == type.type_name) && ((item.title.toLowerCase()).indexOf(fillterContent.toLowerCase()) != -1)"
         >
-          <Element :element="item"/>
+          <Element :element="item" :url='url'/>
         </div>
         <div style="clear:both"></div>
       </div>
@@ -88,6 +88,7 @@ export default {
         .get(this.url + "elements", {})
         .then(res => {
           this.elements = res.data;
+          console.log(this.elements)
         })
         .catch(err => {
           console.log(err);

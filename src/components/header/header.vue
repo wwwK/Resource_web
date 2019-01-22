@@ -9,7 +9,7 @@
       </el-col>
       <el-col :span="4" :offset="6" style="text-align:right">
         <el-button size="mini" class="login" @click="loginDialog = true">{{username || '登陆'}}</el-button>
-        <el-button size="mini" class="login"  @click="logout" v-if="username != ''">退出登陆</el-button>
+        <el-button size="mini" class="login"  @click="logout" v-if="username">退出登陆</el-button>
       </el-col>
     </el-row>
     <el-dialog title="管理员登陆" :visible.sync="loginDialog" width="400px">

@@ -2,7 +2,7 @@
   <div class="element">
         <div class="logo-con">
             <div class="img-wrapper">
-                <img src="./logo.png"  @click="jumpTo(element.website)">
+                <img :src="element.imgurl"  @click="jumpTo(element.website)">
                 {{element.imgurl}}
             </div>
         </div>
