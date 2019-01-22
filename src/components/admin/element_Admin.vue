@@ -148,6 +148,7 @@ export default {
   methods: {
     //修改
     handleEdit(index, row) {
+      this.dialogFormTitle = '修改内容'
       this.dialogFormVisible = true; //显示弹出层
       this.elementForm = row; //显示当前行的数据
       this.operation = "edit"; //当前为修改操作
@@ -178,6 +179,7 @@ export default {
 
     //添加
     addElement() {
+      this.dialogFormTitle = '添加新内容'
       this.dialogFormVisible = true; //显示弹出层
       this.elementForm = {}; //清空原有数据
       this.operation = "add"; //当前为添加操作
@@ -214,7 +216,7 @@ export default {
             message: "删除成功",
             type: "success"
           });
-          return true;
+          this.$emit("upAllData"); //重新获取数据
         })
         .catch(err => {
           this.$message.error("删除失败");
@@ -237,6 +239,7 @@ export default {
             message: "添加成功",
             type: "success"
           });
+          this.$emit("upAllData"); //重新获取数据
           this.dialogFormVisible = false; //关闭弹出层
           this.$emit("upAllData"); //重新获取数据
         })
@@ -260,6 +263,7 @@ export default {
             message: "修改成功",
             type: "success"
           });
+          this.$emit("upAllData"); //重新获取数据
           this.dialogFormVisible = false; //关闭弹出层
           this.$emit("upAllData"); //重新获取数据
         })

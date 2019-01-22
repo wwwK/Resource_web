@@ -22,13 +22,31 @@ export default {
   props: {
     msg: String
   },
+  data: () => ({
+    
+  }),
   components: {
     Main,
     Header
   },
   methods:{
     chengeMain(to) {
-      this.$router.push('./' + to.which);  //跳转到管理页面
+      if(to.which == 'admin'){
+        var user = sessionStorage.getItem('username');
+        if(!user){
+          this.$message({
+            showClose: true,
+            type: 'warning',
+            message: '请先登录'
+          })
+        } else {
+          console.log('用户名' + user)
+          this.$router.push('./' + to.which);  //跳转到管理页面
+        }
+      } else {
+        this.$router.push('./' + to.which);  //跳转到首页页面
+      }
+      
     }
   }
 };

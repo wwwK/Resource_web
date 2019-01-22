@@ -13,6 +13,9 @@
             <p class="desc">
                 {{element.desc}}
             </p>
+            <p class="img-group">
+               <img src="./github.png" title="github" class="github-img" @click="jumpTo(element.github)" v-show="element.github"> 
+            </p>
         </div>
   </div>
 </template>
@@ -61,10 +64,13 @@ export default {
                     height 100%
 
         .content-wrapper
+            height calc(100% - 18px)
             float right
+            position relative
             display inline-block
             width calc(100% - 100px)
             padding-top 15px
+            overflow hidden
             p
                 margin 0
                 padding 0
@@ -76,6 +82,15 @@ export default {
                 font-size 14px
                 color #aaaaaa
                 margin-top 5px
+            .img-group
+                position absolute
+                text-align right 
+                bottom 0
+                right 1em
+                .github-img
+                    height 18px
+                    cursor pointer
+            
 
 </style>
 

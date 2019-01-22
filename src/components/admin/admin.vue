@@ -2,10 +2,10 @@
   <div class="menu">
     <el-tabs v-model="activeName">
       <el-tab-pane label="资源管理" name="elements">
-          <Elementadmin :elements='elements' :options='options' @upAllData='getElementsData'/>
+          <Elementadmin :elements='elements' :options='options' @upAllData='initData'/>
       </el-tab-pane>
       <el-tab-pane label="资源类型管理" name="classtify">
-          <Classtifyadmin :options='options'/>
+          <Classtifyadmin :elements='elements' :options='options' @upAllData='initData'/>
       </el-tab-pane>
       <el-tab-pane label="账户管理" name="users">账户管理</el-tab-pane>
     </el-tabs>
