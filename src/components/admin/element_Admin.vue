@@ -38,6 +38,11 @@
           <span v-else>未填写</span>
         </template>
       </el-table-column>
+      <el-table-column label="LOGO" width="70" align="center">
+        <template slot-scope="scope">
+          <img :src="scope.row.imgurl" style="height:50px;width:50px;">
+        </template>
+      </el-table-column>
       <el-table-column label="描述信息" align="center">
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.desc}}</span>
@@ -58,60 +63,84 @@
       </el-col>
     </el-row>
     <el-dialog :title="dialogFormTitle" :visible.sync="dialogFormVisible">
-        <el-form :model="elementForm" style="text-align:left" label-width="6em" ref="elementForm">
-          <el-form-item label="ID" v-show='false'>
-            <el-col :span="15">
-              <el-input v-model="elementForm.id" disabled></el-input>
-            </el-col>
-          </el-form-item>
-          <el-row>
-            <el-col :span="12">
-              <el-form-item
-                label="标题"
-                prop="title"
-                :rules="{required: true, message: '标题不能为空', trigger: 'blur'}"
-              >
-                <el-input v-model="elementForm.title" placeholder></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="类型" prop="type" :rules="{required: true,message:'请选择类型',trigger: 'change'}">
-                <el-select v-model="elementForm.type" placeholder="请选择类型">
-                  <el-option
-                    v-for="(item,id) in options"
-                    :key="id"
-                    :label="item.type_name"
-                    :value="item.id"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-form-item
-            label="网址"
-            prop="website"
-            :rules="{required: true, message: '网址不能为空', trigger: 'blur'}"
-          >
-            <el-col :span="15">
-              <el-input v-model="elementForm.website"></el-input>
-            </el-col>
-          </el-form-item>
-          <el-form-item label="Github">
-            <el-col :span="15">
-              <el-input v-model="elementForm.github" placeholder='附上Github地址让你的项目更受欢迎'></el-input>
-            </el-col>
-          </el-form-item>
-          <el-form-item label="描述信息">
-            <el-col :span="20">
-              <el-input type="textarea" v-model="elementForm.desc" :rows="3"  placeholder='请用简短的话进行简要描述'></el-input>
-            </el-col>
-          </el-form-item>
-          <el-form-item>
-            <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button @click="resetForm('elementForm')">重 置</el-button>
-            <el-button type="primary" @click="fromSubmit('elementForm')">确 定</el-button>
-          </el-form-item>
-        </el-form>
+      <el-form :model="elementForm" style="text-align:left" label-width="6em" ref="elementForm">
+        <el-form-item label="ID" v-show="false">
+          <el-col :span="15">
+            <el-input v-model="elementForm.id" disabled></el-input>
+          </el-col>
+        </el-form-item>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item
+              label="标题"
+              prop="title"
+              :rules="{required: true, message: '标题不能为空', trigger: 'blur'}"
+            >
+              <el-input v-model="elementForm.title" placeholder></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item
+              label="类型"
+              prop="type"
+              :rules="{required: true,message:'请选择类型',trigger: 'change'}"
+            >
+              <el-select v-model="elementForm.type" placeholder="请选择类型">
+                <el-option
+                  v-for="(item,id) in options"
+                  :key="id"
+                  :label="item.type_name"
+                  :value="item.id"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-form-item
+          label="网址"
+          prop="website"
+          :rules="{required: true, message: '网址不能为空', trigger: 'blur'}"
+        >
+          <el-col :span="15">
+            <el-input v-model="elementForm.website"></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="Github">
+          <el-col :span="15">
+            <el-input v-model="elementForm.github" placeholder="附上Github地址让你的项目更受欢迎"></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="描述信息">
+          <el-col :span="20">
+            <el-input
+              type="textarea"
+              v-model="elementForm.desc"
+              :rows="3"
+              placeholder="请用简短的话进行简要描述"
+            ></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="图片地址" prop="imgurl" :rules="{required: true, message: '请在下方上传图片'}">
+          <el-col :span="20">
+            <el-input v-model="elementForm.imgurl" placeholder="上传图片成功后自动获取地址" disabled></el-input>
+          </el-col>
+        </el-form-item>
+        <el-upload
+          class="avatar-uploader"
+          action="http://www.xmwweb.cn/php/file/upload_file.php"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload"
+        >
+          <img v-if="imageUrl" :src="elementForm.imgurl" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+        <el-form-item>
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button @click="resetForm('elementForm')">重 置</el-button>
+          <el-button type="primary" @click="fromSubmit('elementForm')">确 定</el-button>
+        </el-form-item>
+      </el-form>
     </el-dialog>
   </div>
 </template>
@@ -129,6 +158,7 @@ export default {
     }
   },
   data: () => ({
+    imageUrl: "", //上传的图片地址
     url: "http://localhost:1337/",
     dialogFormVisible: false,
     dialogFormTitle: "编辑内容",
@@ -138,7 +168,8 @@ export default {
       desc: "",
       website: "",
       github: "",
-      type: ""
+      type: "",
+      imgurl: ""
     },
     rules: {
       //表单验证规则
@@ -146,12 +177,31 @@ export default {
     }
   }),
   methods: {
+    handleAvatarSuccess(res) {
+      this.imageUrl = res.path;
+      this.elementForm.imgurl = res.path;
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === "image/jpeg";
+      const isPNG = file.type === "image/png";
+      const isGIF = file.type === "image/gif";
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG && !isPNG && !isGIF) {
+        this.$message.error("上传图片只能是 JPG、PNG、GIT格式!");
+      }
+      if (!isLt2M) {
+        this.$message.error("上传图片大小不能超过 2MB!");
+      }
+      return (isJPG || isPNG || isGIF) && isLt2M;
+    },
     //修改
     handleEdit(index, row) {
-      this.dialogFormTitle = '修改内容'
+      this.dialogFormTitle = "修改内容";
       this.dialogFormVisible = true; //显示弹出层
       this.elementForm = row; //显示当前行的数据
-      this.operation = "edit"; //当前为修改操作
+      this.operation = "edit"; //
+      this.imageUrl = row.imgurl;
     },
     //删除
     handleDelete(index, row) {
@@ -179,7 +229,7 @@ export default {
 
     //添加
     addElement() {
-      this.dialogFormTitle = '添加新内容'
+      this.dialogFormTitle = "添加新内容";
       this.dialogFormVisible = true; //显示弹出层
       this.elementForm = {}; //清空原有数据
       this.operation = "add"; //当前为添加操作
@@ -225,23 +275,21 @@ export default {
 
     //添加数据
     addData() {
-      console.log(this.elementForm);
       axios
         .post(this.url + "elements/", {
           title: this.elementForm.title,
           desc: this.elementForm.desc,
           website: this.elementForm.website,
           github: this.elementForm.github,
-          type: this.elementForm.type
+          type: this.elementForm.type,
+          imgurl: this.elementForm.imgurl
         })
         .then(res => {
           this.$message({
             message: "添加成功",
             type: "success"
           });
-          this.$emit("upAllData"); //重新获取数据
-          this.dialogFormVisible = false; //关闭弹出层
-          this.$emit("upAllData"); //重新获取数据
+          this.successed(); //操作成功后执行
         })
         .catch(err => {
           this.$message.error("添加失败");
@@ -256,31 +304,61 @@ export default {
           desc: this.elementForm.desc,
           website: this.elementForm.website,
           github: this.elementForm.github,
-          type: this.elementForm.type
+          type: this.elementForm.type,
+          imgurl: this.elementForm.imgurl
         })
         .then(res => {
           this.$message({
             message: "修改成功",
             type: "success"
           });
-          this.$emit("upAllData"); //重新获取数据
-          this.dialogFormVisible = false; //关闭弹出层
-          this.$emit("upAllData"); //重新获取数据
+          this.successed(); //操作成功后执行
         })
         .catch(err => {
           this.$message.error("修改失败");
         });
+    },
+
+    //操作成功
+    successed() {
+      this.dialogFormVisible = false; //关闭弹出层
+      this.$emit("upAllData"); //重新获取数据
+      this.imageUrl = ""; //清楚预览图片
     }
   }
 };
 </script>
 
 <style lang="stylus" scoped>
-.weblink {
-  color: #409EFF;
-}
+.avatar-uploader {
+  width: 12em;
+  height: 12em;
+  border: 1px dashed #333333;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  margin-left: 5em;
+  margin-bottom: 1em;
+  overflow: hidden;
+  background: #eeeeee;
 
-.add-wrapper {
-  margin-top: 10px;
+  &:hover {
+    background: rgb(245, 245, 245);
+  }
+
+  .avatar {
+    width: 167px;
+    height: 167px;
+    display: block;
+  }
+
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 167px;
+    height: 167px;
+    line-height: 167px;
+    text-align: center;
+  }
 }
 </style>

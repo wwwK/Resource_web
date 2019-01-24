@@ -2,14 +2,14 @@
   <div class="header">
     <el-row class="top-menu">
       <el-col :span="6" class="logo-wrapper">
-        <img src="./logo.png"  @click="to('main')" class="logo">
+        <span @click="to('main')" class="title">邓占勇的资源空间</span>
       </el-col>
       <el-col :span="8" class>
         <el-button type="primary" @click="to('admin')">管理员界面</el-button>
       </el-col>
       <el-col :span="4" :offset="6" style="text-align:right">
         <el-button size="mini" class="login" @click="loginDialog = true">{{username || '登陆'}}</el-button>
-        <el-button size="mini" class="login"  @click="logout" v-if="username">退出登陆</el-button>
+        <el-button size="mini" class="login" @click="logout" v-if="username">退出登陆</el-button>
       </el-col>
     </el-row>
     <el-dialog title="管理员登陆" :visible.sync="loginDialog" width="400px">
@@ -44,55 +44,54 @@
 </template>
 
 <script>
-
-import axios from 'axios'
+import axios from "axios";
 export default {
   data: () => ({
     url: "http://localhost:1337/",
     searchContent: "",
     loginDialog: false,
     loginFrom: {},
-    username: '',
+    username: ""
   }),
-  created: function(){
-    this.username = sessionStorage.getItem('username')
+  created: function() {
+    this.username = sessionStorage.getItem("username");
   },
   methods: {
-    logout() { //退出登陆
-      this.username = '';
-      sessionStorage.removeItem('username')
+    logout() {
+      //退出登陆
+      this.username = "";
+      sessionStorage.removeItem("username");
     },
     //登陆
     login(loginFrom) {
       this.$refs[loginFrom].validate(valid => {
         if (valid) {
           axios
-          .get(this.url + 'administrators/?name=' + this.loginFrom.name,{})
-          .then(res => {
-            if(res.data.length > 0){
-              if(res.data[0].password == this.loginFrom.password){    //判断密码是否正确
-                this.$message({
-                  showClose: true,
-                  type: 'success',
-                  message: '登陆成功'
-                }) 
-                this.loginDialog = false;   //关闭登陆弹出层
-                this.$refs['loginFrom'].resetFields();   //重置表单，保护信息
-                this.username = res.data[0].name;
-                sessionStorage.setItem("username",res.data[0].name);   //保存当前用户名到浏览器
-              }else {
-                 this.$message({
-                  type: 'error',
-                  message: '密码错误，请重新输入密码'
-                })
+            .get(this.url + "administrators/?name=" + this.loginFrom.name, {})
+            .then(res => {
+              if (res.data.length > 0) {
+                if (res.data[0].password == this.loginFrom.password) {
+                  //判断密码是否正确
+                  this.$message({
+                    showClose: true,
+                    type: "success",
+                    message: "登陆成功"
+                  });
+                  this.loginDialog = false; //关闭登陆弹出层
+                  this.$refs["loginFrom"].resetFields(); //重置表单，保护信息
+                  this.username = res.data[0].name;
+                  sessionStorage.setItem("username", res.data[0].name); //保存当前用户名到浏览器
+                } else {
+                  this.$message({
+                    type: "error",
+                    message: "密码错误，请重新输入密码"
+                  });
+                }
+              } else {
+                this.$message("该用户不存在，请填写正确的用户信息");
               }
-            }else{
-              this.$message('该用户不存在，请填写正确的用户信息')
-            }
-          })
-          .catch(srr => {
-
-          })
+            })
+            .catch(srr => {});
         } else {
           this.$message("登陆失败");
         }
@@ -119,15 +118,20 @@ export default {
 
   .top-menu {
     padding: 0 auto;
-    .logo-wrapper{
-      .logo{
-        cursor pointer
+
+    .logo-wrapper {
+      .logo {
+        cursor: pointer;
       }
     }
 
-    .login {
-      position: relative;
-      top: 5px;
+    .title {
+      display: inline-block;
+      height: 100%;
+      line-height: 100%;
+      font-size: 20px;
+      font-weight: 700;
+      cursor: pointer;
     }
   }
 }

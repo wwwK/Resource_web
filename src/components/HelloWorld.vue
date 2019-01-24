@@ -30,6 +30,7 @@ export default {
     Header
   },
   methods:{
+    
     chengeMain(to) {
       if(to.which == 'admin'){
         var user = sessionStorage.getItem('username');

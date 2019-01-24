@@ -44,10 +44,11 @@
 <script>
 import Element from "./element";
 import axios from "axios";
+import $ from 'jquery'
 
 export default {
   data: () => ({
-    descmsg: "印记中文出品，唯一与官方文档同步的中文文档",
+    descmsg: "此网站内容是为以前端技术为主的资源链接，如有错误或提议，可扫描左方二维码联系作者",
     url: "http://localhost:1337/",
     navigation: {
       type: "success",
@@ -78,6 +79,18 @@ export default {
         .catch(err => {
           console.log(err);
         });
+//          $.ajax({
+//                     type : "GET",
+//                     url : "http://www.xmwweb.cn/php/apitest.php?name=dzy12&age=22",
+//                    // jsonp:"callback",  //Jquery生成验证参数的名称
+//                     success : function(data) {
+// 　　　　　　　　　　　　　　console.log('php返回的数据：' + data)
+//                     },
+//                     error : function(err){
+//                         console.error(err)
+//                     }
+
+//                 });
     },
     toSearch(){   //搜索内容
       this.fillterContent = this.serchContent;
