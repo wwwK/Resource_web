@@ -1,11 +1,17 @@
 <template>
   <div class="hello">
     <el-container class="container">
-      <el-header>
+      <el-header class="el-header">
         <Header @to="chengeMain"/>
       </el-header>
       <el-main class="content">
-        <router-view/>
+        <el-row>
+          <el-col :lg="2" :xl="3">&nbsp;</el-col>
+          <el-col :lg="20" :xl="18">
+            <router-view/>
+          </el-col>
+          <el-col :lg="2" :xl="3">&nbsp;</el-col>
+        </el-row>
       </el-main>
       <el-footer></el-footer>
     </el-container>
@@ -13,8 +19,6 @@
 </template>
 
 <script>
-// import Partner from './components/partner/partner'
-import Main from "./content/main";
 import Header from "./header/header";
 
 export default {
@@ -22,32 +26,26 @@ export default {
   props: {
     msg: String
   },
-  data: () => ({
-    
-  }),
+  data: () => ({}),
   components: {
-    Main,
     Header
   },
-  methods:{
-    
+  methods: {
     chengeMain(to) {
-      if(to.which == 'admin'){
-        var user = sessionStorage.getItem('username');
-        if(!user){
+      if (to.which == "admin") {
+        var user = sessionStorage.getItem("username");
+        if (!user) {
           this.$message({
             showClose: true,
-            type: 'warning',
-            message: '请先登录'
-          })
+            type: "warning",
+            message: "请先登录"
+          });
         } else {
-          console.log('用户名' + user)
-          this.$router.push('./' + to.which);  //跳转到管理页面
+          this.$router.push("./" + to.which); //跳转到管理页面
         }
       } else {
-        this.$router.push('./' + to.which);  //跳转到首页页面
+        this.$router.push("./" + to.which); //跳转到首页页面
       }
-      
     }
   }
 };
@@ -55,13 +53,19 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus" scoped>
-  .hello
-    height 100%
-    .container
-      height:100%
-      width:80%
-      margin 0 auto
-      .content
-        background rgb(240,240,240)
-        min-height calc(100% - 120px)
+.hello {
+  height: 100%;
+  .container {
+    min-height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    .el-header{
+      padding :0;
+    }
+    .content {
+      background: rgb(240, 240, 240);
+      min-height: calc(100% - 120px);
+    }
+  }
+}
 </style>

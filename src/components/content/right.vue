@@ -3,10 +3,8 @@
     <div class="header">
       <div class="desc">
         <el-row>
-          <el-col :span="18">
-            {{descmsg}}
-          </el-col>
-          <el-col :span="6">
+          <el-col :xs="0" :sm="17">{{descmsg}}</el-col>
+          <el-col :xs="24" :sm="7">
             <el-input placeholder="请输入内容" v-model="serchContent" size="small">
               <el-button slot="append" icon="el-icon-search" @click="toSearch"></el-button>
             </el-input>
@@ -19,21 +17,23 @@
           :size="navigation.size"
           v-for="(item,index) in navigation.options"
           :key="index"
-          :hit = true
+          :hit="true"
           class="tag"
         >{{item.type_name}}</el-tag>
       </div>
     </div>
     <div class="content">
       <div v-for="(type,index) in navigation.options" :key="index" class="type-model">
-        <p class="type-title">{{type.type_name}}</p>
+        <p class="type-title"  :v-if="haveoptions.indexOf(type.type_name) >= 0 ? true : false">{{type.type_name}}</p>
         <div
           v-for="(item, key) in elements"
           :key="key"
           class="elements"
-          v-show="(item.type.type_name == type.type_name) && ((item.title.toLowerCase()).indexOf(fillterContent.toLowerCase()) != -1)"
+          v-show="(item.type_name == type.type_name) && ((item.title.toLowerCase()).indexOf(fillterContent.toLowerCase()) != -1)"
         >
-          <Element :element="item" :url='url'/>
+        <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="6">
+          <Element :element="item" :url="url"/>
+        </el-col>
         </div>
         <div style="clear:both"></div>
       </div>
@@ -44,32 +44,35 @@
 <script>
 import Element from "./element";
 import axios from "axios";
-import $ from 'jquery'
+
 
 export default {
   data: () => ({
-    descmsg: "此网站内容是为以前端技术为主的资源链接，如有错误或提议，可扫描左方二维码联系作者",
+    descmsg:
+      "此网站内容是为以前端技术为主的资源链接，如有错误或提议，可扫描左方二维码联系作者",
     url: "http://localhost:1337/",
     navigation: {
       type: "success",
       size: "small ",
-      options: []
+      options: [],
     },
+    haveoptions:[],    //已有子元素的类型名
     elements: [], //存放所有资源元素
     serchContent: "",
-    fillterContent: '',
+    fillterContent: ""
   }),
   components: {
     Element
   },
   created: function() {
     this.initData();
+
   },
   methods: {
     initData() {
-      //获取所有类型
+     //获取所有类型
       axios
-        .get(this.url + "classifies", {})
+        .get("http://localhost/php/classifies/queryAll/", {})
         .then(res => {
           this.navigation.options = res.data;
         })
@@ -79,34 +82,31 @@ export default {
         .catch(err => {
           console.log(err);
         });
-//          $.ajax({
-//                     type : "GET",
-//                     url : "http://www.xmwweb.cn/php/apitest.php?name=dzy12&age=22",
-//                    // jsonp:"callback",  //Jquery生成验证参数的名称
-//                     success : function(data) {
-// 　　　　　　　　　　　　　　console.log('php返回的数据：' + data)
-//                     },
-//                     error : function(err){
-//                         console.error(err)
-//                     }
-
-//                 });
-    },
-    toSearch(){   //搜索内容
-      this.fillterContent = this.serchContent;
-    },
-    getElementsData() {
-      //获取所有资源元素
-      axios
-        .get(this.url + "elements", {})
+        //查询已有子元素的类型名
+        axios
+        .get("http://localhost/php/elements/haveType/", {})
         .then(res => {
-          this.elements = res.data;
-          console.log(this.elements)
+          this.haveoptions = res.data.types
         })
         .catch(err => {
           console.log(err);
         });
-    }
+    },
+    getElementsData() {
+      //获取所有资源元素
+      axios
+        .get('http://localhost/php/elements/queryAll/', {})
+        .then(res => {
+          this.elements = res.data;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    toSearch() {
+      //搜索内容
+      this.fillterContent = this.serchContent;
+    },
   }
 };
 </script>

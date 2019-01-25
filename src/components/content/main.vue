@@ -1,15 +1,13 @@
 <template>
   <div class="main">
       <el-row :gutter="20" justify="space-around" class="main-row">
-        <el-col :span="4" class="left-wrapper">
+        <el-col :xs="0" :sm="4" class="left-wrapper">
           <Left/>
         </el-col>
-        <el-col :span="20" class="right-wrapper">
+        <el-col :xs="24" :sm="20" class="right-wrapper">
           <Right/>
         </el-col>
       </el-row>
-  </div>
-</template>
   </div>
 </template>
 

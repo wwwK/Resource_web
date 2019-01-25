@@ -1,6 +1,11 @@
 <template>
   <div class="element">
-    <el-table :data="elements" style="width: 100%" border>
+    <!-- 展示信息 -->
+    <el-table
+      :data="elements.slice((currentPage-1)*pageSize,currentPage*pageSize)"
+      style="width: 100%"
+      border
+    >
       <el-table-column label="标题" width="110" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.title }}</span>
@@ -9,9 +14,9 @@
       <el-table-column label="类别" width="150" align="center">
         <template slot-scope="scope">
           <el-popover trigger="hover" placement="top">
-            <span>{{ scope.row.type.type_name}}: {{ scope.row.type.type_desc }}</span>
+            <span>{{ scope.row.type_name}}: {{ scope.row.type_desc }}</span>
             <div slot="reference" class="name-wrapper">
-              <el-tag size="medium">{{ scope.row.type.type_name }}</el-tag>
+              <el-tag size="medium">{{ scope.row.type_name }}</el-tag>
             </div>
           </el-popover>
         </template>
@@ -55,6 +60,19 @@
         </template>
       </el-table-column>
     </el-table>
+    <!-- 分页 -->
+    <div :v-if="elements.length > pageSize">
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="elements.length"
+        :page-size="pageSize"
+        :current-page="currentPage"
+        @current-change="handleCurrentChange"
+        @prev-click="(currentPage)=>{currentPage--}"
+        @next-click="(currentPage)=>{currentPage++}"
+      ></el-pagination>
+    </div>
 
     <!-- 信息编辑新增弹出层 -->
     <el-row class="add-wrapper">
@@ -82,10 +100,10 @@
           <el-col :span="12">
             <el-form-item
               label="类型"
-              prop="type"
+              prop="type_name"
               :rules="{required: true,message:'请选择类型',trigger: 'change'}"
             >
-              <el-select v-model="elementForm.type" placeholder="请选择类型">
+              <el-select v-model="elementForm.type_name" placeholder="请选择类型">
                 <el-option
                   v-for="(item,id) in options"
                   :key="id"
@@ -120,7 +138,11 @@
             ></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="图片地址" prop="imgurl" :rules="{required: true, message: '请在下方上传图片'}">
+        <el-form-item
+          label="图片地址"
+          prop="imgurl"
+          :rules="{required: true, message: '请在下方上传图片,如需更改图片,只需点击原图片再次重新选择即可'}"
+        >
           <el-col :span="20">
             <el-input v-model="elementForm.imgurl" placeholder="上传图片成功后自动获取地址" disabled></el-input>
           </el-col>
@@ -136,9 +158,11 @@
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
         <el-form-item>
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button @click="resetForm('elementForm')">重 置</el-button>
-          <el-button type="primary" @click="fromSubmit('elementForm')">确 定</el-button>
+          <el-col :span="10" :offset="12">
+            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button @click="resetForm('elementForm')">重 置</el-button>
+            <el-button type="primary" @click="fromSubmit('elementForm')">确 定</el-button>
+          </el-col>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -146,7 +170,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import $ from "jquery";
 
 export default {
   props: {
@@ -158,6 +182,8 @@ export default {
     }
   },
   data: () => ({
+    currentPage: 1, //当前显示页数
+    pageSize: 7, //每页显示数量
     imageUrl: "", //上传的图片地址
     url: "http://localhost:1337/",
     dialogFormVisible: false,
@@ -177,10 +203,17 @@ export default {
     }
   }),
   methods: {
+    //分页改变
+    handleCurrentChange(size) {
+      this.currentPage = size;
+      console.log(this.elements.length, this.pageSize);
+    },
+    //图片上传成功
     handleAvatarSuccess(res) {
       this.imageUrl = res.path;
       this.elementForm.imgurl = res.path;
     },
+    //提交上传图片
     beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";
       const isPNG = file.type === "image/png";
@@ -255,68 +288,93 @@ export default {
     //重置表单
     resetForm(elementForm) {
       this.$refs[elementForm].resetFields();
+      this.imageUrl = "";
     },
 
     //删除数据
     deleteOneData(id) {
-      axios
-        .delete(this.url + "elements/" + id, {})
-        .then(res => {
+      $.ajax({
+        type: "GET",
+        url: "http://localhost/php/elements/deleteOne/",
+        data: {
+          id: id
+        },
+        success: res => {
+          res = JSON.parse(res);
           this.$message({
-            message: "删除成功",
+            message: res.msg,
             type: "success"
           });
           this.$emit("upAllData"); //重新获取数据
-        })
-        .catch(err => {
-          this.$message.error("删除失败");
-        });
+        },
+        error: err => {
+          console.log(err);
+        }
+      });
     },
 
     //添加数据
     addData() {
-      axios
-        .post(this.url + "elements/", {
+      $.ajax({
+        type: "POST",
+        url: "http://localhost/php/elements/addOne/",
+        data: {
           title: this.elementForm.title,
-          desc: this.elementForm.desc,
-          website: this.elementForm.website,
-          github: this.elementForm.github,
-          type: this.elementForm.type,
+          desc: this.elementForm.desc || "",
+          website: this.elementForm.website || "",
+          github: this.elementForm.github || "",
+          type: this.elementForm.type_name,
           imgurl: this.elementForm.imgurl
-        })
-        .then(res => {
-          this.$message({
-            message: "添加成功",
-            type: "success"
-          });
-          this.successed(); //操作成功后执行
-        })
-        .catch(err => {
+        },
+        success: res => {
+          res = JSON.parse(res);
+          if (res.state) {
+            this.$message({
+              message: res.msg,
+              type: "success"
+            });
+            this.successed(); //操作成功后执行
+          } else {
+            this.$message({
+              message: res.msg,
+              type: "warning"
+            });
+          }
+        },
+        error: err => {
+          console.log(err);
           this.$message.error("添加失败");
-        });
+        }
+      });
     },
 
     //更新数据,接收ID值
     upOneData(id) {
-      axios
-        .put(this.url + "elements/" + id, {
+      $.ajax({
+        type: "POST",
+        url: "http://localhost/php/elements/update/",
+        data: {
+          id: id,
           title: this.elementForm.title,
-          desc: this.elementForm.desc,
-          website: this.elementForm.website,
-          github: this.elementForm.github,
-          type: this.elementForm.type,
+          desc: this.elementForm.desc || "",
+          website: this.elementForm.website || "",
+          github: this.elementForm.github || "",
+          type: this.elementForm.typeId,
           imgurl: this.elementForm.imgurl
-        })
-        .then(res => {
+        },
+        success: res => {
+          res = JSON.parse(res);
           this.$message({
-            message: "修改成功",
+            message: res.msg,
             type: "success"
           });
           this.successed(); //操作成功后执行
-        })
-        .catch(err => {
-          this.$message.error("修改失败");
-        });
+        },
+        error: err => {
+          console.log(err);
+          this.$message.error("添加失败");
+        }
+      });
     },
 
     //操作成功
@@ -337,7 +395,7 @@ export default {
   border-radius: 6px;
   cursor: pointer;
   position: relative;
-  margin-left: 5em;
+  margin-left: 7em;
   margin-bottom: 1em;
   overflow: hidden;
   background: #eeeeee;

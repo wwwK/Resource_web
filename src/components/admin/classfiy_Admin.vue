@@ -1,6 +1,10 @@
 <template>
   <div class="element">
-    <el-table :data="options" style="width: 100%" border>
+    <el-table
+      :data="options.slice((currentPage-1)*pageSize,currentPage*pageSize)"
+      style="width: 100%"
+      border
+    >
       <el-table-column label="类型名称" width="180" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.type_name }}</span>
@@ -23,18 +27,35 @@
         </template>
       </el-table-column>
     </el-table>
+    <!-- 分页 -->
+    <div :v-if="options.length > pageSize">
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="options.length"
+        :page-size="pageSize"
+        :current-page="currentPage"
+        @current-change="handleCurrentChange"
+        @prev-click="(currentPage)=>{currentPage--}"
+        @next-click="(currentPage)=>{currentPage++}"
+      ></el-pagination>
+    </div>
     <!-- 信息编辑新增弹出层 -->
     <el-row class="add-wrapper">
       <el-col :span="8" :offset="15" style="text-align:right">
         <el-button type="primary" @click="addClassfiy">添加</el-button>
       </el-col>
     </el-row>
-    <el-dialog :title="dialogFormTitle" :visible.sync="dialogFormVisible">
+    <el-dialog
+      :title="dialogFormTitle"
+      :visible.sync="dialogFormVisible"
+      style="max-height :670px;"
+    >
       <el-form :model="classfiyFrom" style="text-align:left" label-width="6em" ref="classfiyFrom">
         <el-form-item
           label="编号"
           prop="number"
-          :rules="{required: true, message: '编号不能为空', trigger: 'blur'}"
+          :rules="{required: true, message: '编号不能为空,且为数字', trigger: 'blur'}"
         >
           <el-col :span="15">
             <el-input v-model="classfiyFrom.number" placeholder type="number"></el-input>
@@ -61,7 +82,8 @@
 </template>
 
 <script>
-import axios from "axios";
+
+import $ from "jquery";
 export default {
   props: {
     options: {
@@ -72,6 +94,8 @@ export default {
     }
   },
   data: () => ({
+    currentPage: 1, //当前显示页数
+    pageSize: 10, //每页显示数量
     url: "http://localhost:1337/",
     search: "",
     dialogFormVisible: false,
@@ -80,6 +104,10 @@ export default {
     operation: ""
   }),
   methods: {
+    //分页改变
+    handleCurrentChange(size) {
+      this.currentPage = size;
+    },
     handleEdit(index, row) {
       //编辑信息
       this.dialogFormTitle = "编辑内容";
@@ -95,17 +123,31 @@ export default {
         type: "warning"
       })
         .then(() => {
-          axios
-            .delete(this.url + "classifies/" + row.id, {})
-            .then(res => {
-              this.$message({
-                message: "删除成功",
-                type: "success"
-              });
-            })
-            .catch(err => {
-              this.$message.error("删除失败");
-            });
+          $.ajax({
+            type: "GET",
+            url: "http://localhost/php/classifies/deleteOne/",
+            data: {
+              id: row.id
+            },
+            success: res => {
+              res = JSON.parse(res);
+              if (res.state) {
+                this.$message({
+                  message: res.msg,
+                  type: "success"
+                });
+                this.$emit("upAllData"); //重新获取数据
+              } else {
+                this.$message({
+                  message: res.msg,
+                  type: "warning"
+                });
+              }
+            },
+            error: err => {
+              console.log(err);
+            }
+          });
         })
         .catch(() => {
           this.$message({
@@ -142,45 +184,65 @@ export default {
     },
     //添加数据
     addData() {
-      console.log(this.elementForm);
-      axios
-        .post(this.url + "classifies/", {
+      $.ajax({
+        type: "POST",
+        url: "http://localhost/php/classifies/addOne/",
+        data: {
           number: this.classfiyFrom.number,
           type_name: this.classfiyFrom.type_name,
-          type_desc: this.classfiyFrom.type_desc
-        })
-        .then(res => {
-          this.$message({
-            message: "添加成功",
-            type: "success"
-          });
-          this.dialogFormVisible = false; //关闭弹出层
-          this.$emit("upAllData"); //重新获取数据
-        })
-        .catch(err => {
+          type_desc: this.classfiyFrom.type_desc || "无描述"
+        },
+        success: res => {
+          res = JSON.parse(res);
+          if (res.state) {
+            this.$message({
+              message: res.msg,
+              type: "success"
+            });
+            this.successed(); //操作成功后执行
+          } else {
+            this.$message({
+              message: res.msg,
+              type: "warning"
+            });
+          }
+        },
+        error: err => {
+          console.log(err);
           this.$message.error("添加失败");
-        });
+        }
+      });
     },
 
     //更新数据,接收ID值
     upOneData(id) {
-      axios
-        .put(this.url + "classifies/" + id, {
+      $.ajax({
+        type: "POST",
+        url: "http://localhost/php/classifies/update/",
+        data: {
+          id: id,
           number: this.classfiyFrom.number,
           type_name: this.classfiyFrom.type_name,
           type_desc: this.classfiyFrom.type_desc
-        })
-        .then(res => {
+        },
+        success: res => {
+          res = JSON.parse(res);
           this.$message({
-            message: "修改成功",
+            message: res.msg,
             type: "success"
           });
-          this.dialogFormVisible = false; //关闭弹出层
-          this.$emit("upAllData"); //重新获取数据
-        })
-        .catch(err => {
-          this.$message.error("修改失败");
-        });
+          this.successed(); //操作成功后执行
+        },
+        error: err => {
+          console.log(err);
+          this.$message.error("添加失败");
+        }
+      });
+    },
+    //操作成功
+    successed() {
+      this.dialogFormVisible = false; //关闭弹出层
+      this.$emit("upAllData"); //重新获取数据
     }
   }
 };

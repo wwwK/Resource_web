@@ -1,15 +1,13 @@
 <template>
   <div class="header">
     <el-row class="top-menu">
-      <el-col :span="6" class="logo-wrapper">
+      <el-col :span="12" class="logo-wrapper">
         <span @click="to('main')" class="title">邓占勇的资源空间</span>
       </el-col>
-      <el-col :span="8" class>
-        <el-button type="primary" @click="to('admin')">管理员界面</el-button>
-      </el-col>
-      <el-col :span="4" :offset="6" style="text-align:right">
-        <el-button size="mini" class="login" @click="loginDialog = true">{{username || '登陆'}}</el-button>
+      <el-col :sm="12" style="text-align:right;margin-top:13px;padding-right:0.5em;">
+        <el-button size="mini" class="login" @click="logoin">{{username || '登陆'}}</el-button>
         <el-button size="mini" class="login" @click="logout" v-if="username">退出登陆</el-button>
+        <el-button size="mini" type="warning" icon="el-icon-setting"  @click="to('admin')"  circle></el-button>
       </el-col>
     </el-row>
     <el-dialog title="管理员登陆" :visible.sync="loginDialog" width="400px">
@@ -44,7 +42,8 @@
 </template>
 
 <script>
-import axios from "axios";
+
+import $ from 'jquery'
 export default {
   data: () => ({
     url: "http://localhost:1337/",
@@ -57,6 +56,21 @@ export default {
     this.username = sessionStorage.getItem("username");
   },
   methods: {
+    logoin(){
+      var user = sessionStorage.getItem("username");
+      var loginTime = sessionStorage.getItem("loginTime");
+      if(user){
+        this.$notify({
+          title: '登录信息',
+          type: 'warning',
+          dangerouslyUseHTMLString: true,
+          message:`<p>用户名：${user}</p><p>登录时间:${loginTime}</p>`,
+          offset: 100
+        });
+      }else{
+        this.loginDialog = true;
+      }
+    },
     logout() {
       //退出登陆
       this.username = "";
@@ -66,32 +80,37 @@ export default {
     login(loginFrom) {
       this.$refs[loginFrom].validate(valid => {
         if (valid) {
-          axios
-            .get(this.url + "administrators/?name=" + this.loginFrom.name, {})
-            .then(res => {
-              if (res.data.length > 0) {
-                if (res.data[0].password == this.loginFrom.password) {
-                  //判断密码是否正确
-                  this.$message({
-                    showClose: true,
-                    type: "success",
-                    message: "登陆成功"
-                  });
-                  this.loginDialog = false; //关闭登陆弹出层
-                  this.$refs["loginFrom"].resetFields(); //重置表单，保护信息
-                  this.username = res.data[0].name;
-                  sessionStorage.setItem("username", res.data[0].name); //保存当前用户名到浏览器
-                } else {
-                  this.$message({
-                    type: "error",
-                    message: "密码错误，请重新输入密码"
-                  });
-                }
-              } else {
-                this.$message("该用户不存在，请填写正确的用户信息");
+          $.ajax({
+            type: 'POST',
+            url:'http://localhost/php/administer/queryname/',
+            data:this.loginFrom,
+            success:(res)=> {
+              res =JSON.parse(res);
+              if(res.state){
+                this.$message({
+                  showClose: true,
+                  type: "success",
+                  message:res.msg,
+                })
+                this.loginDialog = false; //关闭登陆弹出层
+                this.$refs["loginFrom"].resetFields(); //重置表单，保护信息
+                this.username = res.name;
+
+                //获取登录时间
+                var time = new Date((new Date()).valueOf()).toLocaleString(); 
+                sessionStorage.setItem("username", res.name); //保存当前用户名到浏览器
+                sessionStorage.setItem("loginTime", time);  //最近一次登录时间
+              }else{
+                this.$message({
+                  type: "error",
+                  message:res.msg,
+                })
               }
-            })
-            .catch(srr => {});
+            },
+            error:(err) => {
+              console.log(err);
+            }
+          });
         } else {
           this.$message("登陆失败");
         }
@@ -112,26 +131,25 @@ export default {
 
 <style lang="stylus" scoped>
 .header {
-  height: calc(100% - 10px);
+  background :#409EFF;
+  height: 100%;
   overflow: hidden;
-  margin-top: 10px;
-
   .top-menu {
     padding: 0 auto;
-
+    height :100%;
     .logo-wrapper {
-      .logo {
+      height :100%;
+      text-align :left;
+      .title {
+        position : absolute;
+        top: 30%;
+        margin-left:0.5em;
         cursor: pointer;
+        line-height: 100%;
+        font-size: 25px;
+        font-weight: 700;
+        cursor: pointer; 
       }
-    }
-
-    .title {
-      display: inline-block;
-      height: 100%;
-      line-height: 100%;
-      font-size: 20px;
-      font-weight: 700;
-      cursor: pointer;
     }
   }
 }

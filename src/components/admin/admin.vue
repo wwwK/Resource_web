@@ -33,13 +33,12 @@ export default {
     this.initData();
   },
   methods: {
-       initData() {
-      //获取所有类型
+      initData() {
+     //获取所有类型
       axios
-        .get(this.url + "classifies", {})
+        .get("http://localhost/php/classifies/queryAll/", {})
         .then(res => {
           this.options = res.data;
-          console.log(this.options)
         })
         .then(() => {
           this.getElementsData();
@@ -51,14 +50,14 @@ export default {
     getElementsData() {
       //获取所有资源元素
       axios
-        .get(this.url + "elements", {})
+        .get('http://localhost/php/elements/queryAll/', {})
         .then(res => {
           this.elements = res.data;
         })
         .catch(err => {
           console.log(err);
         });
-    }
+    },
   }
 };
 </script>
