@@ -8,6 +8,9 @@
           <Right/>
         </el-col>
       </el-row>
+      <div id="toTop" @click="toTop">
+        <span class="text">回到<br/>顶部</span>
+      </div>
   </div>
 </template>
 
@@ -24,7 +27,9 @@ export default {
     Right,Left
   },
   methods:{
-     
+     toTop(){
+       document.documentElement.scrollTop = 0;
+     }
   }
 };
 </script>
@@ -34,4 +39,20 @@ export default {
     margin 0 auto
     min-height 100%
     text-align left 
+    #toTop
+      position fixed
+      right 20px
+      bottom 100px
+      display inline-block
+      width 60px
+      height 60px
+      background #ffffff
+      text-align center
+      cursor pointer
+      border-radius 5px
+      border 1px solid #409eff
+      background rgb(219,230,242)
+      .text
+        display inline-block
+        padding 7px
 </style>

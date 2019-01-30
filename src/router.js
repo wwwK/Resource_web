@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Main from './components/content/main'
-import Header from './components/header/header'
 import Admin from './components/admin/admin'
 
 
@@ -9,11 +8,11 @@ import Admin from './components/admin/admin'
 Vue.use(Router)
 
 export default new Router({
+  mode:"history",
   routes: [
     { path: '/', name: 'home', component: Main },
-    { path: '/main', name: 'Main', component: Main },
-    { path: '/header',  name: 'Header', component: Header},
-    { path: '/admin',  name: 'Admin', component: Admin}
+    { path: '/main', name: 'main', component: Main },
+    { path: '/admin',  name: 'admin', component: Admin}
 
   ]
 })

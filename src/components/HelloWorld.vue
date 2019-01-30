@@ -62,10 +62,16 @@ export default {
     margin: 0 auto;
 
     .el-header {
+      position :fixed;
+      width : 100%;
+      top: 0;
+      left : 0;
       padding: 0;
+      z-index :100;
     }
 
     .content {
+      margin-top:60px;
       background: rgb(240, 240, 240);
       min-height: calc(100% - 120px);
     }

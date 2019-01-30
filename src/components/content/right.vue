@@ -1,11 +1,11 @@
 <template>
-  <div class="left-content">
+  <div class="right-content" id="right">
     <div class="header">
       <div class="desc">
         <el-row>
           <el-col :xs="0" :sm="17">{{descmsg}}</el-col>
           <el-col :xs="24" :sm="7">
-            <el-input placeholder="请输入内容" v-model="serchContent" size="small" @keyup.enter.native='toSearch()'>
+            <el-input placeholder="请输入检索内容" v-model="serchContent" size="small" @keyup.enter.native='toSearch()'>
               <el-button slot="append" icon="el-icon-search" @click="toSearch"></el-button>
             </el-input>
           </el-col>
@@ -20,16 +20,13 @@
           :hit="true"
           class="tag"
         >
-        <a :href="'#' + item.type_name" class="anchor-link">
-          <span>{{item.type_name}}</span>
-        </a>
+        <span @click="toTegional(item.type_name)" class='text'>{{item.type_name}}</span>
         </el-tag>
       </div>
     </div>
     <div class="content">
       <div v-for="(type,index) in navigation.options" :key="index" class="type-model">
-        <a :name="type.type_name"></a>
-        <p class="type-title"  :v-if="haveoptions.indexOf(type.type_name) >= 0 ? true : false">{{type.type_name}}</p>
+        <p class="type-title" :id="type.type_name"  :v-if="haveoptions.indexOf(type.type_name) >= 0 ? true : false">{{type.type_name}}</p>
         <div
           v-for="(item, key) in elements"
           :key="key"
@@ -71,6 +68,11 @@ export default {
     this.initData();
   },
   methods: {
+    toTegional(module) {
+      window.location.hash = "#" + module;   //滚动到指定位置
+      var top = document.documentElement.scrollTop || document.body.scrollTop;   //获取页面当前的滚动距离
+      document.documentElement.scrollTop= top - 65;    //设置页面向下滚动62像素，预留出header的位置
+    },
     initData() {
       //获取所有类型
       axios
@@ -115,10 +117,9 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.el-tag{
-  padding:0;
+.el-tag {
+  padding: 0;
 }
-
 
 .header {
   .desc {
@@ -133,6 +134,7 @@ export default {
     .tag {
       margin: 5px 5px;
       cursor: pointer;
+      
       &:hover {
         .anchor-link {
           span {
@@ -143,18 +145,11 @@ export default {
         color: #ffffff;
       }
 
-      .anchor-link {
-        display :inline-block;
-        width :100%;
-        height :100%;
-        text-decoration: none;
-        span {
-          display :inline-block;
-          width :100%;
-          height :100%;
-          padding:0 8px;
-          color: #67c23a;
-        }
+      .text{
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        padding: 0 8px;
       }
     }
   }
