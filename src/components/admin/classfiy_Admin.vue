@@ -83,7 +83,6 @@
 
 <script>
 
-import $ from "jquery";
 export default {
   props: {
     options: {
@@ -96,7 +95,6 @@ export default {
   data: () => ({
     currentPage: 1, //当前显示页数
     pageSize: 10, //每页显示数量
-    url: "http://localhost:1337/",
     search: "",
     dialogFormVisible: false,
     dialogFormTitle: "",
@@ -123,9 +121,9 @@ export default {
         type: "warning"
       })
         .then(() => {
-          $.ajax({
+          this.$.ajax({
             type: "GET",
-            url: "http://localhost/php/classifies/deleteOne/",
+            url: this.api.classifiesDeleteOne,
             data: {
               id: row.id
             },
@@ -184,9 +182,9 @@ export default {
     },
     //添加数据
     addData() {
-      $.ajax({
+      this.$.ajax({
         type: "POST",
-        url: "http://localhost/php/classifies/addOne/",
+        url: this.api.classifiesAddOne,
         data: {
           number: this.classfiyFrom.number,
           type_name: this.classfiyFrom.type_name,
@@ -216,9 +214,9 @@ export default {
 
     //更新数据,接收ID值
     upOneData(id) {
-      $.ajax({
+      this.$.ajax({
         type: "POST",
-        url: "http://localhost/php/classifies/update/",
+        url: this.api.classifiesUpdate,
         data: {
           id: id,
           number: this.classfiyFrom.number,

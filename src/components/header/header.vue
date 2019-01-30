@@ -43,10 +43,8 @@
 
 <script>
 
-import $ from 'jquery'
 export default {
   data: () => ({
-    url: "http://localhost:1337/",
     searchContent: "",
     loginDialog: false,
     loginFrom: {},
@@ -80,9 +78,9 @@ export default {
     login(loginFrom) {
       this.$refs[loginFrom].validate(valid => {
         if (valid) {
-          $.ajax({
+          this.$.ajax({
             type: 'POST',
-            url:'http://localhost/php/administer/queryname/',
+            url:this.api.administerQueryName,
             data:this.loginFrom,
             success:(res)=> {
               res =JSON.parse(res);

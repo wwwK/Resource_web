@@ -5,7 +5,7 @@
         <el-row>
           <el-col :xs="0" :sm="17">{{descmsg}}</el-col>
           <el-col :xs="24" :sm="7">
-            <el-input placeholder="请输入内容" v-model="serchContent" size="small">
+            <el-input placeholder="请输入内容" v-model="serchContent" size="small" @keyup.enter.native='toSearch()'>
               <el-button slot="append" icon="el-icon-search" @click="toSearch"></el-button>
             </el-input>
           </el-col>
@@ -19,11 +19,16 @@
           :key="index"
           :hit="true"
           class="tag"
-        >{{item.type_name}}</el-tag>
+        >
+        <a :href="'#' + item.type_name" class="anchor-link">
+          <span>{{item.type_name}}</span>
+        </a>
+        </el-tag>
       </div>
     </div>
     <div class="content">
       <div v-for="(type,index) in navigation.options" :key="index" class="type-model">
+        <a :name="type.type_name"></a>
         <p class="type-title"  :v-if="haveoptions.indexOf(type.type_name) >= 0 ? true : false">{{type.type_name}}</p>
         <div
           v-for="(item, key) in elements"
@@ -32,7 +37,7 @@
           v-show="(item.type_name == type.type_name) && ((item.title.toLowerCase()).indexOf(fillterContent.toLowerCase()) != -1)"
         >
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="6">
-          <Element :element="item" :url="url"/>
+          <Element :element="item"/>
         </el-col>
         </div>
         <div style="clear:both"></div>
@@ -45,18 +50,16 @@
 import Element from "./element";
 import axios from "axios";
 
-
 export default {
   data: () => ({
     descmsg:
       "此网站内容是为以前端技术为主的资源链接，如有错误或提议，可扫描左方二维码联系作者",
-    url: "http://localhost:1337/",
     navigation: {
       type: "success",
       size: "small ",
-      options: [],
+      options: []
     },
-    haveoptions:[],    //已有子元素的类型名
+    haveoptions: [], //已有子元素的类型名
     elements: [], //存放所有资源元素
     serchContent: "",
     fillterContent: ""
@@ -66,13 +69,12 @@ export default {
   },
   created: function() {
     this.initData();
-
   },
   methods: {
     initData() {
-     //获取所有类型
+      //获取所有类型
       axios
-        .get("http://localhost/php/classifies/queryAll/", {})
+        .get(this.api.classifiesQueryAll, {})
         .then(res => {
           this.navigation.options = res.data;
         })
@@ -82,11 +84,11 @@ export default {
         .catch(err => {
           console.log(err);
         });
-        //查询已有子元素的类型名
-        axios
-        .get("http://localhost/php/elements/haveType/", {})
+      //查询已有子元素的类型名
+      axios
+        .get(this.api.elementsHaveType, {})
         .then(res => {
-          this.haveoptions = res.data.types
+          this.haveoptions = res.data.types;
         })
         .catch(err => {
           console.log(err);
@@ -95,7 +97,7 @@ export default {
     getElementsData() {
       //获取所有资源元素
       axios
-        .get('http://localhost/php/elements/queryAll/', {})
+        .get(this.api.elementsQueryAll, {})
         .then(res => {
           this.elements = res.data;
         })
@@ -103,15 +105,21 @@ export default {
           console.log(err);
         });
     },
-    toSearch() {
+    toSearch(e = "1") {
       //搜索内容
+      console.log(e);
       this.fillterContent = this.serchContent;
-    },
+    }
   }
 };
 </script>
 
 <style lang="stylus" scoped>
+.el-tag{
+  padding:0;
+}
+
+
 .header {
   .desc {
     color: red;
@@ -125,10 +133,28 @@ export default {
     .tag {
       margin: 5px 5px;
       cursor: pointer;
-
       &:hover {
+        .anchor-link {
+          span {
+            color: #ffffff;
+          }
+        }
         background: #67c23a;
         color: #ffffff;
+      }
+
+      .anchor-link {
+        display :inline-block;
+        width :100%;
+        height :100%;
+        text-decoration: none;
+        span {
+          display :inline-block;
+          width :100%;
+          height :100%;
+          padding:0 8px;
+          color: #67c23a;
+        }
       }
     }
   }
@@ -141,16 +167,6 @@ export default {
     margin: 10px 0 10px;
     font-weight: 700;
     border-bottom: 2px solid #cccccc;
-  }
-
-  .elements {
-    :last-child {
-      clear: right;
-    }
-
-    :hover {
-      background: #F2F6FC;
-    }
   }
 }
 </style>

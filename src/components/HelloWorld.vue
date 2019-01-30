@@ -55,13 +55,16 @@ export default {
 <style lang="stylus" scoped>
 .hello {
   height: 100%;
+
   .container {
     min-height: 100%;
     width: 100%;
     margin: 0 auto;
-    .el-header{
-      padding :0;
+
+    .el-header {
+      padding: 0;
     }
+
     .content {
       background: rgb(240, 240, 240);
       min-height: calc(100% - 120px);

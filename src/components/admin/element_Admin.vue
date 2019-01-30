@@ -170,7 +170,6 @@
 </template>
 
 <script>
-import $ from "jquery";
 
 export default {
   props: {
@@ -185,7 +184,6 @@ export default {
     currentPage: 1, //当前显示页数
     pageSize: 7, //每页显示数量
     imageUrl: "", //上传的图片地址
-    url: "http://localhost:1337/",
     dialogFormVisible: false,
     dialogFormTitle: "编辑内容",
     operation: "", //当前表单的操作
@@ -293,9 +291,9 @@ export default {
 
     //删除数据
     deleteOneData(id) {
-      $.ajax({
+      this.$.ajax({
         type: "GET",
-        url: "http://localhost/php/elements/deleteOne/",
+        url: this.api.elementsDeleteOne,
         data: {
           id: id
         },
@@ -315,9 +313,9 @@ export default {
 
     //添加数据
     addData() {
-      $.ajax({
+      this.$.ajax({
         type: "POST",
-        url: "http://localhost/php/elements/addOne/",
+        url: this.api.elementsAddOne,
         data: {
           title: this.elementForm.title,
           desc: this.elementForm.desc || "",
@@ -350,9 +348,9 @@ export default {
 
     //更新数据,接收ID值
     upOneData(id) {
-      $.ajax({
+      this.$.ajax({
         type: "POST",
-        url: "http://localhost/php/elements/update/",
+        url: this.api.elementsUpdate,
         data: {
           id: id,
           title: this.elementForm.title,

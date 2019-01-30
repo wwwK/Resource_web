@@ -18,11 +18,8 @@ import Classtifyadmin from './classfiy_Admin'
 import axios from "axios";
 
 export default {
-  //测试提交到远程
-  //测试提交dev分支
   data: () => ({
     activeName: "elements", //默认选择展开第一个选项卡
-    url: "http://localhost:1337/",
     options: [],
     elements: [],
   }),
@@ -36,7 +33,7 @@ export default {
       initData() {
      //获取所有类型
       axios
-        .get("http://localhost/php/classifies/queryAll/", {})
+        .get(this.api.classifiesQueryAll, {})
         .then(res => {
           this.options = res.data;
         })
@@ -50,7 +47,7 @@ export default {
     getElementsData() {
       //获取所有资源元素
       axios
-        .get('http://localhost/php/elements/queryAll/', {})
+        .get(this.api.elementsQueryAll, {})
         .then(res => {
           this.elements = res.data;
         })

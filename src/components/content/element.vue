@@ -43,6 +43,8 @@ export default {
         border-radius 5px
         background #ffffff
         margin 0 15px 15px 0px
+        &:hover
+            background : rgba(102,177,255,0.15)
         .logo-con
             display inline-block
             height 100%
