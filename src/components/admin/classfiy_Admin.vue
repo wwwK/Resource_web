@@ -5,20 +5,11 @@
       style="width: 100%"
       border
     >
-      <el-table-column label="类型名称" width="180" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.type_name }}</span>
-        </template>
+      <el-table-column label="类型名称" width="180" align="center" :sortable="true" prop='type_name'>
       </el-table-column>
-      <el-table-column label="编号" width="100" align="center">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.number }}</span>
-        </template>
+      <el-table-column label="编号" width="100" align="center" :sortable='true'  prop="number">
       </el-table-column>
-      <el-table-column label="描述" align="left">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.type_desc }}</span>
-        </template>
+      <el-table-column label="描述" align="left" prop='type_desc'>
       </el-table-column>
       <el-table-column label="操作" width="150" align="center">
         <template slot-scope="scope">
@@ -50,6 +41,7 @@
       :title="dialogFormTitle"
       :visible.sync="dialogFormVisible"
       style="max-height :670px;"
+      @close='cancel()'
     >
       <el-form :model="classfiyFrom" style="text-align:left" label-width="6em" ref="classfiyFrom">
         <el-form-item
@@ -72,7 +64,7 @@
           <el-input v-model="classfiyFrom.type_desc" type="textarea" placeholder="请填写简要描述信息"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button @click="cancel()">取 消</el-button>
           <el-button @click="resetForm('classfiyFrom')">重 置</el-button>
           <el-button type="primary" @click="fromSubmit('classfiyFrom')">确 定</el-button>
         </el-form-item>
@@ -82,7 +74,6 @@
 </template>
 
 <script>
-
 export default {
   props: {
     options: {
@@ -122,8 +113,8 @@ export default {
       })
         .then(() => {
           this.$.ajax({
-            type: "GET",
-            url: this.api.classifiesDeleteOne,
+            type: this.api.classifiesDeleteOne.type,
+            url: this.api.classifiesDeleteOne.url,
             data: {
               id: row.id
             },
@@ -161,8 +152,15 @@ export default {
       this.classfiyFrom = {}; //清空原有数据
       this.operation = "add"; //当前为添加操作
     },
+
+    //取消表单
+    cancel() {
+      this.dialogFormVisible = false;
+      this.resetForm("classfiyFrom");
+    },
+
+    //重置表单
     resetForm(classfiyFrom) {
-      //重置表单
       this.$refs[classfiyFrom].resetFields();
     },
     fromSubmit(classfiyFrom) {
@@ -183,8 +181,8 @@ export default {
     //添加数据
     addData() {
       this.$.ajax({
-        type: "POST",
-        url: this.api.classifiesAddOne,
+        type: this.api.classifiesAddOne.type,
+        url: this.api.classifiesAddOne.url,
         data: {
           number: this.classfiyFrom.number,
           type_name: this.classfiyFrom.type_name,
@@ -215,8 +213,8 @@ export default {
     //更新数据,接收ID值
     upOneData(id) {
       this.$.ajax({
-        type: "POST",
-        url: this.api.classifiesUpdate,
+        type: this.api.classifiesUpdate.type,
+        url: this.api.classifiesUpdate.url,
         data: {
           id: id,
           number: this.classfiyFrom.number,

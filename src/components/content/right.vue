@@ -74,7 +74,7 @@ export default {
     initData() {
       //获取所有类型
       axios
-        .get(this.api.classifiesQueryAll, {})
+        .get(this.api.classifiesQueryAll.url, {})
         .then(res => {
           this.navigation.options = res.data;
         })
@@ -84,9 +84,9 @@ export default {
         .catch(err => {
           console.log(err);
         });
-      //查询已有子元素的类型名
+      //查询已有子元素的类型名~
       axios
-        .get(this.api.elementsHaveType, {})
+        .get(this.api.elementsHaveType.url, {})
         .then(res => {
           this.haveoptions = res.data.types;
         })
@@ -97,7 +97,7 @@ export default {
     getElementsData() {
       //获取所有资源元素
       axios
-        .get(this.api.elementsQueryAll, {})
+        .get(this.api.elementsQueryAll.url, {})
         .then(res => {
           this.elements = res.data;
         })

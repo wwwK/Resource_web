@@ -79,8 +79,8 @@ export default {
       this.$refs[loginFrom].validate(valid => {
         if (valid) {
           this.$.ajax({
-            type: 'POST',
-            url:this.api.administerQueryName,
+            type: this.api.administerQueryName.type,
+            url:this.api.administerQueryName.url,
             data:this.loginFrom,
             success:(res)=> {
               res =JSON.parse(res);

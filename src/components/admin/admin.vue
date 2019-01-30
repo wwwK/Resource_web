@@ -33,7 +33,7 @@ export default {
       initData() {
      //获取所有类型
       axios
-        .get(this.api.classifiesQueryAll, {})
+        .get(this.api.classifiesQueryAll.url, {})
         .then(res => {
           this.options = res.data;
         })
@@ -47,7 +47,7 @@ export default {
     getElementsData() {
       //获取所有资源元素
       axios
-        .get(this.api.elementsQueryAll, {})
+        .get(this.api.elementsQueryAll.url, {})
         .then(res => {
           this.elements = res.data;
         })

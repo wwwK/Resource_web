@@ -6,12 +6,9 @@
       style="width: 100%"
       border
     >
-      <el-table-column label="标题" width="110" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.title }}</span>
-        </template>
+      <el-table-column label="标题" width="110" align="center" prop="title" :sortable="true">
       </el-table-column>
-      <el-table-column label="类别" width="150" align="center">
+      <el-table-column label="类别" width="150" align="center" prop="type_name" :sortable="true">
         <template slot-scope="scope">
           <el-popover trigger="hover" placement="top">
             <span>{{ scope.row.type_name}}: {{ scope.row.type_desc }}</span>
@@ -48,10 +45,7 @@
           <img :src="scope.row.imgurl" style="height:50px;width:50px;">
         </template>
       </el-table-column>
-      <el-table-column label="描述信息" align="center">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.desc}}</span>
-        </template>
+      <el-table-column label="描述信息" align="center" prop="desc">
       </el-table-column>
       <el-table-column label="操作" width="150" align="center">
         <template slot-scope="scope">
@@ -80,7 +74,7 @@
         <el-button type="primary" @click="addElement">添加</el-button>
       </el-col>
     </el-row>
-    <el-dialog :title="dialogFormTitle" :visible.sync="dialogFormVisible">
+    <el-dialog :title="dialogFormTitle" :visible.sync="dialogFormVisible" @close='cancel()'>
       <el-form :model="elementForm" style="text-align:left" label-width="6em" ref="elementForm">
         <el-form-item label="ID" v-show="false">
           <el-col :span="15">
@@ -159,7 +153,7 @@
         </el-upload>
         <el-form-item>
           <el-col :span="10" :offset="12">
-            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button @click="cancel()">取 消</el-button>
             <el-button @click="resetForm('elementForm')">重 置</el-button>
             <el-button type="primary" @click="fromSubmit('elementForm')">确 定</el-button>
           </el-col>
@@ -283,6 +277,12 @@ export default {
       });
     },
 
+    //取消表单
+    cancel(){
+      this.dialogFormVisible = false
+      this.resetForm('elementForm')
+    },
+
     //重置表单
     resetForm(elementForm) {
       this.$refs[elementForm].resetFields();
@@ -292,8 +292,8 @@ export default {
     //删除数据
     deleteOneData(id) {
       this.$.ajax({
-        type: "GET",
-        url: this.api.elementsDeleteOne,
+        type: this.api.elementsDeleteOne.type,
+        url: this.api.elementsDeleteOne.url,
         data: {
           id: id
         },
@@ -314,8 +314,8 @@ export default {
     //添加数据
     addData() {
       this.$.ajax({
-        type: "POST",
-        url: this.api.elementsAddOne,
+        type: this.api.elementsAddOne.type,
+        url: this.api.elementsAddOne.url,
         data: {
           title: this.elementForm.title,
           desc: this.elementForm.desc || "",
@@ -349,8 +349,8 @@ export default {
     //更新数据,接收ID值
     upOneData(id) {
       this.$.ajax({
-        type: "POST",
-        url: this.api.elementsUpdate,
+        type: this.api.elementsUpdate.type,
+        url: this.api.elementsUpdate.url,
         data: {
           id: id,
           title: this.elementForm.title,
