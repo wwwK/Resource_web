@@ -5,9 +5,11 @@ import '../node_modules/element-ui/lib/theme-chalk/index.css'
 import router from './router'
 import api from './apiconfig'
 import $ from 'jquery'
+import echarts from 'echarts'
 
 Vue.prototype.api = api;
 Vue.prototype.$ = $;
+Vue.prototype.$echarts = echarts 
 
 Vue.use(ElementUI);
 
