@@ -380,6 +380,7 @@ export default {
       this.dialogFormVisible = false; //关闭弹出层
       this.$emit("upAllData"); //重新获取数据
       this.imageUrl = ""; //清楚预览图片
+      this.resetForm('elementForm');  //重置表单
     }
   }
 };

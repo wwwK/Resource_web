@@ -15,23 +15,23 @@
         <el-tag
           :type="navigation.type"
           :size="navigation.size"
-          v-for="(item,index) in navigation.options"
+          v-for="(item,index) in haveoptions"
           :key="index"
           :hit="true"
           class="tag"
         >
-        <span @click="toTegional(item.type_name)" class='text'>{{item.type_name}}</span>
+        <span @click="toTegional(item)" class='text'>{{item}}</span>
         </el-tag>
       </div>
     </div>
     <div class="content">
-      <div v-for="(type,index) in navigation.options" :key="index" class="type-model">
-        <p class="type-title" :id="type.type_name"  :v-if="haveoptions.indexOf(type.type_name) >= 0 ? true : false">{{type.type_name}}</p>
+      <div v-for="(typename,index) in haveoptions" :key="index" class="type-model">
+        <p class="type-title" :id="typename"  :v-if="haveoptions.indexOf(typename) >= 0 ? true : false">{{typename}}</p>
         <div
           v-for="(item, key) in elements"
           :key="key"
           class="elements"
-          v-show="(item.type_name == type.type_name) && ((item.title.toLowerCase()).indexOf(fillterContent.toLowerCase()) != -1)"
+          v-show="(item.type_name == typename) && ((item.title.toLowerCase()).indexOf(fillterContent.toLowerCase()) != -1)"
         >
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="6">
           <Element :element="item"/>
@@ -107,9 +107,8 @@ export default {
           console.log(err);
         });
     },
-    toSearch(e = "1") {
+    toSearch() {
       //搜索内容
-      console.log(e);
       this.fillterContent = this.serchContent;
     }
   }

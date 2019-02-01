@@ -40,6 +40,10 @@ const api = {
         url: url + 'elements/update/',
         type: 'POST'
     },
+    everyClassNum:{
+        url: url + 'classifies/eachNumber/', //每个类型所含的元素数量
+        type: 'GET'
+    }
 }
 
 export default api;

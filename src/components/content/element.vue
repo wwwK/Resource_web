@@ -3,7 +3,6 @@
         <div class="logo-con">
             <div class="img-wrapper">
                 <img :src="element.imgurl"  @click="jumpTo(element.website)">
-                {{element.imgurl}}
             </div>
         </div>
         <div class="content-wrapper">
@@ -81,7 +80,7 @@ export default {
                 white-space nowrap;
                 cursor pointer
             .desc
-                font-size 14px
+                font-size 13px
                 color #aaaaaa
                 margin-top 5px
             .img-group

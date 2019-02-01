@@ -7,7 +7,9 @@
       <el-tab-pane label="资源类型管理" name="classtify">
           <Classtifyadmin :elements='elements' :options='options' @upAllData='initData'/>
       </el-tab-pane>
-      <el-tab-pane label="账户管理" name="users">账户管理</el-tab-pane>
+      <el-tab-pane label="信息统计" name="users">
+        <InformationStatistics/>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -15,6 +17,7 @@
 <script>
 import Elementadmin from './element_Admin'
 import Classtifyadmin from './classfiy_Admin'
+import InformationStatistics from './InformationStatistics'
 import axios from "axios";
 
 export default {
@@ -24,7 +27,7 @@ export default {
     elements: [],
   }),
   components:{
-      Elementadmin,Classtifyadmin
+      Elementadmin,Classtifyadmin,InformationStatistics
   },
   created: function() {
     this.initData();
