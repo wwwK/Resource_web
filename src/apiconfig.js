@@ -43,6 +43,14 @@ const api = {
     everyClassNum:{
         url: url + 'classifies/eachNumber/', //每个类型所含的元素数量
         type: 'GET'
+    },
+    browserinsert:{
+        url: url + 'browser/insert/', //每个类型所含的元素数量
+        type: 'POST'
+    },
+    browserSelect:{
+        url: url + 'browser/query/', //每个类型所含的元素数量
+        type: 'POST'
     }
 }
 

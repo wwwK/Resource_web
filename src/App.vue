@@ -11,6 +11,33 @@ export default {
   name: "app",
   components: {
     HelloWorld
+  },
+  created() {
+    this.getInformation();
+  },
+  methods: {
+    getInformation() {
+      var x = navigator;
+      var information = {
+        CodeName: x.appCodeName,
+        Name: x.appName,
+        Version: x.appVersion,
+        Platform: x.platform,
+        UA: x.userAgent
+      };
+
+      this.$.ajax({
+        type: this.api.browserinsert.type,
+        url: this.api.browserinsert.url,
+        data: {
+          'CodeName': x.appCodeName,
+          'Name': x.appName,
+          'Version': x.appVersion,
+          'Platform': x.platform,
+          'UA': x.userAgent
+        }
+      });
+    }
   }
 };
 </script>
