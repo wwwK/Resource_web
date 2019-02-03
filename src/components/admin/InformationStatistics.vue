@@ -64,6 +64,9 @@ export default {
       // dom.style.width=document.getElementById("wrapper").width;
       let myChart = this.$echarts.init(dom);
       var data = this.getVirtulData(2019);
+      var maxdata = data.sort((a,b)=>{
+        return b[1] - a[1];
+      })[0];
 
       var option = {
         backgroundColor: "#404a59",
@@ -91,7 +94,7 @@ export default {
         calendar: [
           {
             top: 100,
-            left: "center",
+            left: 70,
             cellSize: 18,
             range: ["2019-01-01", "2019-12-30"],
             splitLine: {
@@ -105,7 +108,7 @@ export default {
             },
             yearLabel: {
               //年份字的样式
-              formatter: "{start} 上半年",
+              formatter: "{start} 年",
               textStyle: {
                 color: "#fff"
               }
@@ -120,7 +123,15 @@ export default {
             }
           }
         ],
-
+        tooltip: {
+          //trigger: "item",
+          formatter:(params)=>{
+            return params.data[0]+ '<br />' + params.marker + '浏览量：' + params.data[1] + '次' + '<br />全年排名：' + (params.dataIndex + 1);
+          },
+          backgroundColor:'rgba(100,100,100,0.5)',
+          borderColor:'rgba(100,100,100,0.1)',
+          borderWidth:2
+        },
         series: [
           //系列列表。每个系列通过 type 决定自己的图表类型
           {
@@ -129,7 +140,7 @@ export default {
             coordinateSystem: "calendar",
             data: data,
             symbolSize: function(val) {
-              return val[1];
+              return Math.floor(val[1]*18/maxdata[1]);
             },
             itemStyle: {
               normal: {
@@ -147,16 +158,16 @@ export default {
               })
               .slice(0, 3),
             symbolSize: function(val) {
-              return val[1];
+              return  Math.floor(val[1]*18/maxdata[1]);
             },
-            showEffectOn: "render",
+            showEffectOn: "render", //何时显示特效
             rippleEffect: {
-              brushType: "stroke"
+              brushType: "stroke" //波纹的绘制方式
             },
             hoverAnimation: true,
             itemStyle: {
               normal: {
-                color: "#f4e925",
+                // color: "#f4e925",
                 shadowBlur: 10,
                 shadowColor: "#333"
               }
@@ -317,7 +328,7 @@ export default {
 <style lang="stylus" scoped>
 #Classfiy, #Browse {
   height: 350px;
-  width :1150px;
+  width: 1060px;
 }
 </style>
 
