@@ -60,8 +60,6 @@ export default {
     //浏览次数统计
     Browsevolume() {
       var dom = document.getElementById("Browse");
-      //console.log(document.getElementById("wrapper").innerWidth);
-      // dom.style.width=document.getElementById("wrapper").width;
       let myChart = this.$echarts.init(dom);
       var data = this.getVirtulData(2019);
       var maxdata = data.sort((a,b)=>{
@@ -94,9 +92,9 @@ export default {
         calendar: [
           {
             top: 100,
-            left: 70,
-            cellSize: 18,
-            range: ["2019-01-01", "2019-12-30"],
+            left: 'center',
+            cellSize: 23,
+            range: ["2019-01-01", "2019-6-30"],
             splitLine: {
               //整个日历样式
               show: true,
@@ -108,7 +106,7 @@ export default {
             },
             yearLabel: {
               //年份字的样式
-              formatter: "{start} 年",
+              formatter: "{start} 上半年",
               textStyle: {
                 color: "#fff"
               }
@@ -126,7 +124,7 @@ export default {
         tooltip: {
           //trigger: "item",
           formatter:(params)=>{
-            return params.data[0]+ '<br />' + params.marker + '浏览量：' + params.data[1] + '次' + '<br />全年排名：' + (params.dataIndex + 1);
+            return `${params.data[0]}<br />${params.marker}浏览量：${params.data[1]}次<br />${params.marker}全年排名：${ (params.dataIndex + 1)}`;
           },
           backgroundColor:'rgba(100,100,100,0.5)',
           borderColor:'rgba(100,100,100,0.1)',
@@ -328,7 +326,7 @@ export default {
 <style lang="stylus" scoped>
 #Classfiy, #Browse {
   height: 350px;
-  width: 1060px;
+  width: 1100px;
 }
 </style>
 
