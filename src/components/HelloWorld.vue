@@ -13,13 +13,16 @@
           <el-col :lg="2" :xl="3">&nbsp;</el-col>
         </el-row>
       </el-main>
-      <el-footer></el-footer>
+      <el-footer class="footer-wrapper">
+        <Footer/>
+      </el-footer>
     </el-container>
   </div>
 </template>
 
 <script>
 import Header from "./header/header";
+import Footer from "./footer/footer";
 
 export default {
   name: "HelloWorld",
@@ -28,7 +31,8 @@ export default {
   },
   data: () => ({}),
   components: {
-    Header
+    Header,
+    Footer
   },
   methods: {
     chengeMain(to) {
@@ -62,18 +66,22 @@ export default {
     margin: 0 auto;
 
     .el-header {
-      position :fixed;
-      width : 100%;
+      position: fixed;
+      width: 100%;
       top: 0;
-      left : 0;
+      left: 0;
       padding: 0;
-      z-index :100;
+      z-index: 100;
     }
 
     .content {
-      margin-top:60px;
+      margin-top: 60px;
       background: rgb(240, 240, 240);
       min-height: calc(100% - 120px);
+    }
+
+    .footer-wrapper {
+      background: rgb(240, 240, 240);
     }
   }
 }
