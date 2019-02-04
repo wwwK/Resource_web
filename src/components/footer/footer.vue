@@ -2,6 +2,7 @@
     <div class="footer">
         <p>
             <a href="https://blog.csdn.net/DengZY926" target="_blank">CSDN</a>&nbsp;&nbsp;
+            <a href="https://github.com/CTBUdzy" target="_blank">Github</a>&nbsp;&nbsp;
             <a href="http://www.xmwweb.cn" class="website" target="_blank">邓占勇的个人中心</a>
         </p>
         <p>
