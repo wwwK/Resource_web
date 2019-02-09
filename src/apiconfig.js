@@ -9,7 +9,7 @@ const api = {
         type: 'POST'
     },
     administerQueryName: {      //验证用户登录
-        url: url + 'administer/queryname/',
+        url: url + 'loading/queryname/',
         type: 'POST'
     },
     elementsHaveType: {        //查询所有元素所涉及到的类型
@@ -51,6 +51,10 @@ const api = {
     browserSelect:{
         url: url + 'browser/query/', //每个类型所含的元素数量
         type: 'POST'
+    },
+    loginByPhone:{
+        url: url + 'loading/loginByPhone/', //每个类型所含的元素数量
+        type: 'GET'
     }
 }
 
