@@ -1,31 +1,69 @@
 <template>
-    <el-dialog title="管理员登陆" :visible.sync="loginDialog" width="400px">
-      <el-form :model="loginFrom" label-width="5em" ref="loginFrom">
-        <el-form-item
-          label="用户名"
-          prop="name"
-          :rules="{required: true, message: '账号不能为空', trigger: 'blur'}"
-        >
-          <el-col :span="20">
-            <el-input type="text" v-model="loginFrom.name"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item
-          label="密码"
-          prop="password"
-          :rules="{required: true, message: '密码不能为空', trigger: 'blur'}"
-        >
-          <el-col :span="20">
-            <el-input type="password" v-model="loginFrom.password"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item label>
-          <el-col :span="16" :offset="1">
-            <el-button @click="loginDialog = false" size="small">取 消</el-button>
-            <el-button type="primary" @click="login('loginFrom')" size="small">确 定</el-button>
-          </el-col>
-        </el-form-item>
-      </el-form>
+    <el-dialog title="" :visible.sync="loginDialog" width="400px">
+      <el-tabs>
+        <el-tab-pane label="密码登陆">
+          <el-form :model="loginFrom" label-width="5em" ref="loginFrom">
+            <el-form-item
+              label="用户名"
+              prop="name"
+              :rules="{required: true, message: '账号不能为空', trigger: 'blur'}"
+            >
+              <el-col :span="20">
+                <el-input type="text" v-model="loginFrom.name"></el-input>
+              </el-col>
+            </el-form-item>
+            <el-form-item
+              label="密码"
+              prop="password"
+              :rules="{required: true, message: '密码不能为空', trigger: 'blur'}"
+            >
+              <el-col :span="20">
+                <el-input type="password" v-model="loginFrom.password"></el-input>
+              </el-col>
+            </el-form-item>
+            <el-form-item label>
+              <el-col :span="16" :offset="1">
+                <el-button @click="cancelLanding()" size="small">取 消</el-button>
+                <el-button type="primary" @click="login('loginFrom')" size="small">确 定</el-button>
+              </el-col>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+        <!-- 手机验证登陆 -->
+        <el-tab-pane label="手机验证登陆">
+          <el-form :model="phoneFrom" label-width="5em" ref="phoneFrom">
+            <el-form-item
+              label="手机号"
+              prop="phone"
+              :rules="{required: true, message: '手机号不能空', trigger: 'blur'}"
+            >
+              <el-col :span="20">
+                <el-input type="text" v-model="phoneFrom.phone"></el-input>
+              </el-col>
+            </el-form-item>
+            <el-form-item
+              label="验证码"
+              prop="VerCode"
+              :rules="{required: true, message: '验证码不能为空', trigger: 'blur'}"
+            >
+              <el-col :span="12">
+                <el-input type="text" v-model="phoneFrom.VerCode"></el-input>
+              </el-col>
+              <el-col :span="8">
+                <el-button type="primary" size="small" @click="getVerCode()" :disabled='VerCode.disabled'>
+                  {{VerCode.text}}
+                </el-button>
+              </el-col>
+            </el-form-item>
+            <el-form-item label>
+              <el-col :span="16" :offset="1">
+                <el-button @click="cancelLanding()" size="small">取 消</el-button>
+                <el-button type="primary" @click="loginByPhone('phoneFrom')" size="small">确 定</el-button>
+              </el-col>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+      </el-tabs>
     </el-dialog>
 </template>
 
@@ -36,21 +74,129 @@ export default {
   },
   data: () => ({
     loginFrom: {},
+    phoneFrom: {},
+    VerCode: {
+      disabled: false,
+      text: "获取验证码",
+      time: 60
+    },
+    phoneLogoin: {
+      //保存获取的临时登陆信息
+      phone: "",
+      VerCode: "",
+      username: ""
+    }
   }),
-  methods:{
-      logoin(){
-      var user = sessionStorage.getItem("username");
-      var loginTime = sessionStorage.getItem("loginTime");
-      if(user){
-        this.$notify({
-          title: '登录信息',
-          type: 'warning',
-          dangerouslyUseHTMLString: true,
-          message:`<p>用户名：${user}</p><p>登录时间:${loginTime}</p>`,
-          offset: 100
+  methods: {
+    //取消登陆
+    cancelLanding() {
+      this.$emit("CloseDialog", { state: false });
+    },
+    loginByPhone(phoneFrom) {
+      this.$refs[phoneFrom].validate(valid => {
+        if (valid) {
+          if (
+            this.phoneFrom.phone == this.phoneLogoin.phone &&
+            this.phoneFrom.VerCode == this.phoneLogoin.VerCode
+          ) {
+            this.$message({
+              showClose: true,
+              type: "success",
+              message: "登陆成功"
+            });
+            this.$refs["phoneFrom"].resetFields(); //重置表单，保护信息
+
+            //获取登录时间
+            var time = new Date(new Date().valueOf()).toLocaleString();
+            sessionStorage.setItem("username", this.phoneLogoin.username); //保存当前用户名到浏览器
+            sessionStorage.setItem("loginTime", time); //最近一次登录时间
+            sessionStorage.setItem("loadingMode", '手机验证登陆'); //登陆方式
+            //向父组件传值
+            this.$emit("CloseDialog", {
+              state: false,
+              username: this.phoneLogoin.username
+            });
+          } else {
+            this.$message({
+              showClose: true,
+              type: "warning",
+              message: "登录失败！请输入正确的手机号和验证码！"
+            });
+          }
+        }
+      });
+    },
+    //手机验证码登陆
+    getVerCode() {
+      if (!this.phoneFrom.phone) {
+        this.$message({
+          showClose: true,
+          type: "warning",
+          message: "请输入手机号码！"
         });
-      }else{
-        this.loginDialog = true;
+      } else if (this.phoneFrom.phone.length != 11) {
+        this.$message({
+          showClose: true,
+          type: "error",
+          message: "手机号码格式错误！请输入有效的手机号码！"
+        });
+      } else {
+        console.log(this.phoneFrom.phone);
+        this.$.ajax({
+          type: this.api.loginByPhone.type,
+          url: this.api.loginByPhone.url,
+          data: { phone: this.phoneFrom.phone },
+          success: res => {
+            res = typeof res == "string" ? JSON.parse(res) : res;
+           // console.log(res);
+            if (res.state) {
+              if (res.Message == "OK") {
+                //提示发送成功消息
+                this.$message({
+                  showClose: true,
+                  type: "success",
+                  message: "验证码已发送，请注意查收！"
+                });
+                //保存可用信息
+                this.phoneLogoin = {
+                  phone: res.phone,
+                  VerCode: res.VerCode,
+                  username: res.username
+                };
+                //锁定获取验证码1分钟
+                this.VerCode.disabled = true;
+                var timeInterval = setInterval(() => {
+                  this.VerCode.text = this.VerCode.time-- + "s";
+                  if (this.VerCode.time == 1) {
+                    clearInterval(timeInterval);
+                    this.VerCode.disabled = false;
+                    this.VerCode.text = "获取验证码";
+                    //清楚之前的信息
+                    this.phoneLogoin = {
+                      phone: "",
+                      VerCode: "",
+                      username: ""
+                    };
+                  }
+                }, 1000);
+              } else {
+                this.$message({
+                  showClose: true,
+                  type: "error",
+                  message: res.Message
+                });
+              }
+            } else {
+              this.$message({
+                type: "error",
+                message: res.msg
+              });
+            }
+          },
+          error: err => {
+            console.log(err);
+          }
+        });
       }
     },
     login(loginFrom) {
@@ -58,32 +204,33 @@ export default {
         if (valid) {
           this.$.ajax({
             type: this.api.administerQueryName.type,
-            url:this.api.administerQueryName.url,
-            data:this.loginFrom,
-            success:(res)=> {
-              res =JSON.parse(res);
-              if(res.state){
+            url: this.api.administerQueryName.url,
+            data: this.loginFrom,
+            success: res => {
+              res = JSON.parse(res);
+              if (res.state) {
                 this.$message({
                   showClose: true,
                   type: "success",
-                  message:res.msg,
-                })
+                  message: res.msg
+                });
                 this.$refs["loginFrom"].resetFields(); //重置表单，保护信息
-                
+
                 //获取登录时间
-                var time = new Date((new Date()).valueOf()).toLocaleString(); 
+                var time = new Date(new Date().valueOf()).toLocaleString();
                 sessionStorage.setItem("username", res.name); //保存当前用户名到浏览器
-                sessionStorage.setItem("loginTime", time);  //最近一次登录时间
+                sessionStorage.setItem("loginTime", time); //最近一次登录时间
+                sessionStorage.setItem("loadingMode", '账号密码登陆'); //登陆方式
                 //向父组件传值
-                this.$emit('CloseDialog', {'state':false,'username':res.name});
-              }else{
+                this.$emit("CloseDialog", { state: false, username: res.name });
+              } else {
                 this.$message({
                   type: "error",
-                  message:res.msg,
-                })
+                  message: res.msg
+                });
               }
             },
-            error:(err) => {
+            error: err => {
               console.log(err);
             }
           });
@@ -91,7 +238,7 @@ export default {
           this.$message("登陆失败");
         }
       });
-    },
+    }
   }
 };
 </script>

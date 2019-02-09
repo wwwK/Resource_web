@@ -21,7 +21,6 @@ export default {
   data: () => ({
     searchContent: "",
     loginDialog: false,
-    //loginFrom: {},
     username: ""
   }),
   components:{
@@ -35,12 +34,13 @@ export default {
     logoin(){
       var user = sessionStorage.getItem("username");
       var loginTime = sessionStorage.getItem("loginTime");
+      var loadingMode = sessionStorage.getItem("loadingMode");
       if(user){
         this.$notify({
           title: '登录信息',
           type: 'warning',
           dangerouslyUseHTMLString: true,
-          message:`<p>用户名：${user}</p><p>登录时间:${loginTime}</p>`,
+          message:`<p>用户名：${user}</p><p>登录时间:${loginTime}</p><p>登陆方式：${loadingMode}</p>`,
           offset: 100
         });
       }else{
@@ -55,7 +55,7 @@ export default {
     //关闭弹出层
     CloseDialog(res){
       this.loginDialog = res.state;
-      this.username = res.username;
+      this.username = res.username || '';
     },
 
     goBack() {
