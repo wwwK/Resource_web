@@ -1,4 +1,4 @@
-const url = 'http://localhost/php/'; //本地测试
+const url = 'http://localhost/resources/'; //本地测试
 const api = {
     classifiesQueryAll: {    //查询所有类型
         url: url + 'classifies/queryAll/',
