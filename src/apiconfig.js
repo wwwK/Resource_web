@@ -45,15 +45,15 @@ const api = {
         type: 'GET'
     },
     browserinsert:{
-        url: url + 'browser/insert/', //每个类型所含的元素数量
+        url: url + 'browser/insert/', //记录访问信息
         type: 'POST'
     },
     browserSelect:{
-        url: url + 'browser/query/', //每个类型所含的元素数量
+        url: url + 'browser/query/', //查询所有访问信息
         type: 'POST'
     },
     loginByPhone:{
-        url: url + 'loading/loginByPhone/', //每个类型所含的元素数量
+        url: url + 'loading/loginByPhone/', //短信验证
         type: 'GET'
     }
 }
