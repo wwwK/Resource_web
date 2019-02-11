@@ -1,15 +1,23 @@
 const url = 'http://localhost/resources/'; //本地测试
 const api = {
+    administerQueryName: {      //验证用户登录
+        url: url + 'loading/loginByUsername/',
+        type: 'POST'
+    },
+    loginByPhone:{
+        url: url + 'loading/loginByPhone/', //短信验证
+        type: 'GET'
+    },
+    savelandingRecord:{
+        url: url + 'loading/insterlandingrecord/', //登陆记录
+        type: 'GET'
+    },
     classifiesQueryAll: {    //查询所有类型
         url: url + 'classifies/queryAll/',
         type: 'POST'
     },
     elementsQueryAll: {       //查询所有元素
         url: url + 'elements/queryAll/',
-        type: 'POST'
-    },
-    administerQueryName: {      //验证用户登录
-        url: url + 'loading/queryname/',
         type: 'POST'
     },
     elementsHaveType: {        //查询所有元素所涉及到的类型
@@ -52,10 +60,7 @@ const api = {
         url: url + 'browser/query/', //查询所有访问信息
         type: 'POST'
     },
-    loginByPhone:{
-        url: url + 'loading/loginByPhone/', //短信验证
-        type: 'GET'
-    }
+    
 }
 
 export default api;

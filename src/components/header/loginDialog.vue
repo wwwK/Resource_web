@@ -92,6 +92,7 @@ export default {
     cancelLanding() {
       this.$emit("CloseDialog", { state: false });
     },
+    //手机验证码登陆
     loginByPhone(phoneFrom) {
       this.$refs[phoneFrom].validate(valid => {
         if (valid) {
@@ -110,12 +111,13 @@ export default {
             var time = new Date(new Date().valueOf()).toLocaleString();
             sessionStorage.setItem("username", this.phoneLogoin.username); //保存当前用户名到浏览器
             sessionStorage.setItem("loginTime", time); //最近一次登录时间
-            sessionStorage.setItem("loadingMode", '手机验证登陆'); //登陆方式
+            sessionStorage.setItem("loadingMode", "手机验证登陆"); //登陆方式
             //向父组件传值
             this.$emit("CloseDialog", {
               state: false,
               username: this.phoneLogoin.username
             });
+            this.saveLoadingRecord('短信验证码',this.phoneLogoin.username);  //保存登陆记录
           } else {
             this.$message({
               showClose: true,
@@ -126,7 +128,7 @@ export default {
         }
       });
     },
-    //手机验证码登陆
+    //获取验证码
     getVerCode() {
       if (!this.phoneFrom.phone) {
         this.$message({
@@ -141,14 +143,13 @@ export default {
           message: "手机号码格式错误！请输入有效的手机号码！"
         });
       } else {
-        console.log(this.phoneFrom.phone);
         this.$.ajax({
           type: this.api.loginByPhone.type,
           url: this.api.loginByPhone.url,
           data: { phone: this.phoneFrom.phone },
           success: res => {
             res = typeof res == "string" ? JSON.parse(res) : res;
-           // console.log(res);
+            // console.log(res);
             if (res.state) {
               if (res.Message == "OK") {
                 //提示发送成功消息
@@ -220,9 +221,10 @@ export default {
                 var time = new Date(new Date().valueOf()).toLocaleString();
                 sessionStorage.setItem("username", res.name); //保存当前用户名到浏览器
                 sessionStorage.setItem("loginTime", time); //最近一次登录时间
-                sessionStorage.setItem("loadingMode", '账号密码登陆'); //登陆方式
+                sessionStorage.setItem("loadingMode", "账号密码登陆"); //登陆方式
                 //向父组件传值
                 this.$emit("CloseDialog", { state: false, username: res.name });
+                this.saveLoadingRecord('账号密码', res.name);  //保存登陆记录
               } else {
                 this.$message({
                   type: "error",
@@ -236,6 +238,21 @@ export default {
           });
         } else {
           this.$message("登陆失败");
+        }
+      });
+    },
+    //保存登陆记录
+    saveLoadingRecord(mode = "未知", username) {
+      this.$.ajax({
+        type: this.api.savelandingRecord.type,
+        url: this.api.savelandingRecord.url,
+        data: {
+          landingMode:mode,
+          username: username,
+          verCode: this.phoneLogoin.VerCode || '无',
+        },
+        error:(error) =>{
+          console.log(error);
         }
       });
     }
