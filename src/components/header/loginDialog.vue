@@ -172,6 +172,7 @@ export default {
                     clearInterval(timeInterval);
                     this.VerCode.disabled = false;
                     this.VerCode.text = "获取验证码";
+                    this.VerCode.time = 60;
                     //清楚之前的信息
                     this.phoneLogoin = {
                       phone: "",

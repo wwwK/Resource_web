@@ -302,18 +302,6 @@ export default {
             magicType: { show: true, type: ["line", "bar"] },
             restore: { show: true },
             saveAsImage: { show: true }
-            // myTool1: {   //自定义按钮
-            //   show: true,
-            //   title: "刷新数据",
-            //   icon: "image://http://echarts.baidu.com/images/favicon.png",
-            //   onclick: () => {
-            //     this.getData();
-            //     this.$message({
-            //       message: "刷新成功",
-            //       type: "success"
-            //     });
-            //   }
-            // }
           }
         }
       };
