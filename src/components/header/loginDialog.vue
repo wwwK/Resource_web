@@ -1,15 +1,15 @@
 <template>
-    <el-dialog title="" :visible.sync="loginDialog" width="400px">
-      <el-tabs>
+    <el-dialog title="管理员登陆" :visible.sync="loginDialog" width="400px" :close-on-click-modal='false' :show-close='false' :modal="false" style="z-index:5000">
+      <el-tabs :stretch='true'>
         <el-tab-pane label="密码登陆">
-          <el-form :model="loginFrom" label-width="5em" ref="loginFrom">
+          <el-form :model="passwordFrom" label-width="5em" ref="passwordFrom">
             <el-form-item
               label="用户名"
               prop="name"
               :rules="{required: true, message: '账号不能为空', trigger: 'blur'}"
             >
               <el-col :span="20">
-                <el-input type="text" v-model="loginFrom.name"></el-input>
+                <el-input type="text" v-model="passwordFrom.name"></el-input>
               </el-col>
             </el-form-item>
             <el-form-item
@@ -18,13 +18,13 @@
               :rules="{required: true, message: '密码不能为空', trigger: 'blur'}"
             >
               <el-col :span="20">
-                <el-input type="password" v-model="loginFrom.password"></el-input>
+                <el-input type="password" v-model="passwordFrom.password"></el-input>
               </el-col>
             </el-form-item>
             <el-form-item label>
               <el-col :span="16" :offset="1">
                 <el-button @click="cancelLanding()" size="small">取 消</el-button>
-                <el-button type="primary" @click="login('loginFrom')" size="small">确 定</el-button>
+                <el-button type="primary" @click="login('passwordFrom')" size="small">确 定</el-button>
               </el-col>
             </el-form-item>
           </el-form>
@@ -73,7 +73,7 @@ export default {
     loginDialog: {}
   },
   data: () => ({
-    loginFrom: {},
+    passwordFrom: {},
     phoneFrom: {},
     VerCode: {
       disabled: false,
@@ -91,6 +91,12 @@ export default {
     //取消登陆
     cancelLanding() {
       this.$emit("CloseDialog", { state: false });
+      this.resetForm('passwordFrom');
+      this.resetForm('phoneFrom');
+    },
+    //重置表单
+    resetForm(formname) {
+      this.$refs[formname].resetFields();
     },
     //手机验证码登陆
     loginByPhone(phoneFrom) {
@@ -201,13 +207,13 @@ export default {
         });
       }
     },
-    login(loginFrom) {
-      this.$refs[loginFrom].validate(valid => {
+    login(passwordFrom) {
+      this.$refs[passwordFrom].validate(valid => {
         if (valid) {
           this.$.ajax({
             type: this.api.administerQueryName.type,
             url: this.api.administerQueryName.url,
-            data: this.loginFrom,
+            data: this.passwordFrom,
             success: res => {
               res = JSON.parse(res);
               if (res.state) {
@@ -216,7 +222,7 @@ export default {
                   type: "success",
                   message: res.msg
                 });
-                this.$refs["loginFrom"].resetFields(); //重置表单，保护信息
+                this.$refs["passwordFrom"].resetFields(); //重置表单，保护信息
 
                 //获取登录时间
                 var time = new Date(new Date().valueOf()).toLocaleString();
