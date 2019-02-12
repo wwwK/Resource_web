@@ -1,8 +1,8 @@
 <template>
-    <el-dialog title="管理员登陆" :visible.sync="loginDialog" width="400px" :close-on-click-modal='false' :show-close='false' :modal="false" style="z-index:5000">
+    <el-dialog title="管理员登陆" :visible.sync="loginDialog" width="400px" :close-on-click-modal='false' :show-close='false' :modal="false">
       <el-tabs :stretch='true'>
         <el-tab-pane label="密码登陆">
-          <el-form :model="passwordFrom" label-width="5em" ref="passwordFrom">
+          <el-form :model="passwordFrom" label-width="5em" ref="passwordFrom" class="form">
             <el-form-item
               label="用户名"
               prop="name"
@@ -21,17 +21,15 @@
                 <el-input type="password" v-model="passwordFrom.password"></el-input>
               </el-col>
             </el-form-item>
-            <el-form-item label>
-              <el-col :span="16" :offset="1">
-                <el-button @click="cancelLanding()" size="small">取 消</el-button>
-                <el-button type="primary" @click="login('passwordFrom')" size="small">确 定</el-button>
-              </el-col>
-            </el-form-item>
+            <div class="button-warpper">
+                <el-button @click="cancelLanding()">取 消</el-button>
+                <el-button type="primary" @click="login('passwordFrom')">登 陆</el-button>
+            </div>
           </el-form>
         </el-tab-pane>
         <!-- 手机验证登陆 -->
         <el-tab-pane label="手机验证登陆">
-          <el-form :model="phoneFrom" label-width="5em" ref="phoneFrom">
+          <el-form :model="phoneFrom" label-width="5em" ref="phoneFrom" class="form">
             <el-form-item
               label="手机号"
               prop="phone"
@@ -46,21 +44,18 @@
               prop="VerCode"
               :rules="{required: true, message: '验证码不能为空', trigger: 'blur'}"
             >
-              <el-col :span="12">
-                <el-input type="text" v-model="phoneFrom.VerCode"></el-input>
-              </el-col>
-              <el-col :span="8">
-                <el-button type="primary" size="small" @click="getVerCode()" :disabled='VerCode.disabled'>
+              <el-col :span="20">
+                <el-input type="text" v-model="phoneFrom.VerCode">
+                  <el-button slot="append" type="success" size="small" @click="getVerCode()" :disabled='VerCode.disabled'>
                   {{VerCode.text}}
                 </el-button>
+                </el-input>
               </el-col>
             </el-form-item>
-            <el-form-item label>
-              <el-col :span="16" :offset="1">
-                <el-button @click="cancelLanding()" size="small">取 消</el-button>
-                <el-button type="primary" @click="loginByPhone('phoneFrom')" size="small">确 定</el-button>
-              </el-col>
-            </el-form-item>
+            <div class="button-warpper">
+                <el-button @click="cancelLanding()">取 消</el-button>
+                <el-button type="primary" @click="loginByPhone('phoneFrom')">登 陆</el-button>
+            </div>
           </el-form>
         </el-tab-pane>
       </el-tabs>
@@ -85,18 +80,20 @@ export default {
       phone: "",
       VerCode: "",
       username: ""
-    }
+    },
+    timeInterval: '',
   }),
   methods: {
     //取消登陆
     cancelLanding() {
       this.$emit("CloseDialog", { state: false });
-      this.resetForm('passwordFrom');
-      this.resetForm('phoneFrom');
+      this.resetForm("passwordFrom");
+      this.resetForm("phoneFrom");
     },
     //重置表单
     resetForm(formname) {
       this.$refs[formname].resetFields();
+      this.resetVercode();
     },
     //手机验证码登陆
     loginByPhone(phoneFrom) {
@@ -123,7 +120,8 @@ export default {
               state: false,
               username: this.phoneLogoin.username
             });
-            this.saveLoadingRecord('短信验证码',this.phoneLogoin.username);  //保存登陆记录
+            this.saveLoadingRecord("短信验证码", this.phoneLogoin.username); //保存登陆记录
+            this.resetVercode();
           } else {
             this.$message({
               showClose: true,
@@ -172,19 +170,10 @@ export default {
                 };
                 //锁定获取验证码1分钟
                 this.VerCode.disabled = true;
-                var timeInterval = setInterval(() => {
+                this.timeInterval = setInterval(() => {
                   this.VerCode.text = this.VerCode.time-- + "s";
                   if (this.VerCode.time == 1) {
-                    clearInterval(timeInterval);
-                    this.VerCode.disabled = false;
-                    this.VerCode.text = "获取验证码";
-                    this.VerCode.time = 60;
-                    //清楚之前的信息
-                    this.phoneLogoin = {
-                      phone: "",
-                      VerCode: "",
-                      username: ""
-                    };
+                    this.resetVercode();
                   }
                 }, 1000);
               } else {
@@ -206,6 +195,18 @@ export default {
           }
         });
       }
+    },
+    resetVercode() {
+      clearInterval(this.timeInterval);
+      this.VerCode.disabled = false;
+      this.VerCode.text = "获取验证码";
+      this.VerCode.time = 60;
+      //清楚之前的信息
+      this.phoneLogoin = {
+        phone: "",
+        VerCode: "",
+        username: ""
+      };
     },
     login(passwordFrom) {
       this.$refs[passwordFrom].validate(valid => {
@@ -231,7 +232,7 @@ export default {
                 sessionStorage.setItem("loadingMode", "账号密码登陆"); //登陆方式
                 //向父组件传值
                 this.$emit("CloseDialog", { state: false, username: res.name });
-                this.saveLoadingRecord('账号密码', res.name);  //保存登陆记录
+                this.saveLoadingRecord("账号密码", res.name); //保存登陆记录
               } else {
                 this.$message({
                   type: "error",
@@ -254,11 +255,11 @@ export default {
         type: this.api.savelandingRecord.type,
         url: this.api.savelandingRecord.url,
         data: {
-          landingMode:mode,
+          landingMode: mode,
           username: username,
-          verCode: this.phoneLogoin.VerCode || '无',
+          verCode: this.phoneLogoin.VerCode || "无"
         },
-        error:(error) =>{
+        error: error => {
           console.log(error);
         }
       });
@@ -268,5 +269,8 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.form {
+  padding-top: 20px;
+}
 </style>
 
