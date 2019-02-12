@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : wamp
+ Source Server         : 新建
  Source Server Type    : MySQL
  Source Server Version : 50723
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 50723
  File Encoding         : 65001
 
- Date: 09/02/2019 12:08:37
+ Date: 12/02/2019 16:39:20
 */
 
 SET NAMES utf8mb4;
@@ -51,7 +51,7 @@ CREATE TABLE `browserrecord`  (
   `Platform` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `UA` varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`number`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 107 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 186 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of browserrecord
@@ -155,6 +155,85 @@ INSERT INTO `browserrecord` VALUES (103, '2019-02-09 11:47:03', 'Mozilla', 'Nets
 INSERT INTO `browserrecord` VALUES (104, '2019-02-09 11:53:17', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
 INSERT INTO `browserrecord` VALUES (105, '2019-02-09 11:54:16', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
 INSERT INTO `browserrecord` VALUES (106, '2019-02-09 12:00:28', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (107, '2019-02-09 12:14:11', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (108, '2019-02-09 12:19:42', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (109, '2019-02-11 09:49:25', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (110, '2019-02-11 09:50:38', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (111, '2019-02-11 09:58:26', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (112, '2019-02-11 10:02:40', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (113, '2019-02-11 10:16:33', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (114, '2019-02-11 10:29:27', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (115, '2019-02-11 10:31:24', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (116, '2019-02-11 10:34:24', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (117, '2019-02-11 11:08:08', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (118, '2019-02-11 11:09:32', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (119, '2019-02-11 15:04:49', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (120, '2019-02-11 15:06:19', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (121, '2019-02-11 15:07:16', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (122, '2019-02-11 15:07:19', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (123, '2019-02-11 15:35:09', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (124, '2019-02-11 15:36:46', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (125, '2019-02-11 15:42:22', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (126, '2019-02-11 15:45:37', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (127, '2019-02-11 15:51:07', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (128, '2019-02-11 15:51:16', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (129, '2019-02-11 15:51:33', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (130, '2019-02-11 15:51:53', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (131, '2019-02-11 16:11:02', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (132, '2019-02-11 16:11:41', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (133, '2019-02-11 16:12:55', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (134, '2019-02-11 16:13:24', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (135, '2019-02-11 16:14:38', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (136, '2019-02-11 16:15:04', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (137, '2019-02-11 16:15:38', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (138, '2019-02-11 16:17:02', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (139, '2019-02-11 16:22:17', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (140, '2019-02-11 16:23:19', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (141, '2019-02-11 16:24:43', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (142, '2019-02-11 16:25:29', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (143, '2019-02-11 16:25:36', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (144, '2019-02-11 16:27:32', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (145, '2019-02-11 16:44:57', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (146, '2019-02-11 16:46:06', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (147, '2019-02-11 16:49:48', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (148, '2019-02-11 16:51:01', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (149, '2019-02-11 16:55:06', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (150, '2019-02-11 16:55:39', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (151, '2019-02-11 16:57:44', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (152, '2019-02-11 17:03:59', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (153, '2019-02-11 17:07:30', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (154, '2019-02-11 17:07:53', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (155, '2019-02-11 17:08:06', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (156, '2019-02-11 17:10:13', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (157, '2019-02-11 17:11:06', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (158, '2019-02-11 17:12:02', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (159, '2019-02-11 17:19:26', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (160, '2019-02-12 09:16:56', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (161, '2019-02-12 09:25:36', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (162, '2019-02-12 09:26:47', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (163, '2019-02-12 09:32:21', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (164, '2019-02-12 09:41:37', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (165, '2019-02-12 09:42:21', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (166, '2019-02-12 09:44:13', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (167, '2019-02-12 09:46:24', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (168, '2019-02-12 09:46:54', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (169, '2019-02-12 09:49:57', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (170, '2019-02-12 09:58:18', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (171, '2019-02-12 10:40:24', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (172, '2019-02-12 10:43:15', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (173, '2019-02-12 10:47:25', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (174, '2019-02-12 10:48:04', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (175, '2019-02-12 10:51:50', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (176, '2019-02-12 10:52:55', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (177, '2019-02-12 10:54:04', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (178, '2019-02-12 11:02:13', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (179, '2019-02-12 11:07:47', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (180, '2019-02-12 11:17:18', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (181, '2019-02-12 15:01:33', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (182, '2019-02-12 15:04:40', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (183, '2019-02-12 15:10:33', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (184, '2019-02-12 15:17:04', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
+INSERT INTO `browserrecord` VALUES (185, '2019-02-12 16:38:26', 'Mozilla', 'Netscape', 'Win32', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36');
 
 -- ----------------------------
 -- Table structure for classifies
@@ -213,7 +292,7 @@ CREATE TABLE `elements`  (
   `imgurl` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   FULLTEXT INDEX `SEARCH_ELEMENTS`(`title`, `desc`, `website`, `github`)
-) ENGINE = InnoDB AUTO_INCREMENT = 103 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 104 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of elements
@@ -284,16 +363,46 @@ INSERT INTO `elements` VALUES (99, '学习 RxJS 操作符', '通过每个操作�
 INSERT INTO `elements` VALUES (100, 'Threejs', 'JavaScript 3d 库', 'https://threejs.docschina.org/', '', 45, '2019-01-31 15:34:08', '2019-01-31 15:34:08', 'http://www.xmwweb.cn/php/file/upload/threejs-6c6680.png');
 INSERT INTO `elements` VALUES (101, 'ECharts', '百度 - 使用 JavaScript 实现的开源可视化库', 'http://echarts.baidu.com/', '', 45, '2019-01-31 15:34:35', '2019-01-31 15:34:35', 'http://www.xmwweb.cn/php/file/upload/echarts-904a59.png');
 INSERT INTO `elements` VALUES (102, 'SpriteJS', '360 - 跨平台的轻量级 2D 渲染对象模型', 'http://spritejs.org/', '', 45, '2019-01-31 15:35:14', '2019-01-31 15:35:14', 'http://www.xmwweb.cn/php/file/upload/spritejs-0ab41a.png');
+INSERT INTO `elements` VALUES (103, 'Vue Native', 'Vue Native is a framework to build cross platform native mobile apps using JavaScript', 'https://vue-native.io/', '', 39, '2019-02-11 15:08:14', '2019-02-11 15:08:45', 'http://www.xmwweb.cn/php/file/upload/logo.png');
 
 -- ----------------------------
 -- Table structure for landingrecord
 -- ----------------------------
 DROP TABLE IF EXISTS `landingrecord`;
 CREATE TABLE `landingrecord`  (
-  `landingMode` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `phone` int(255) NULL DEFAULT NULL,
-  `dateTime` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  `phone` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `landingMode` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `loadingTime` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP,
+  `verCode` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 39 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of landingrecord
+-- ----------------------------
+INSERT INTO `landingrecord` VALUES (18, '测试用户', '18716565374', '账号密码登陆', '2019-02-11 09:52:26', NULL);
+INSERT INTO `landingrecord` VALUES (19, '测试用户', '18716565374', '短信验证码登陆', '2019-02-11 09:54:11', NULL);
+INSERT INTO `landingrecord` VALUES (17, '邓占勇', '18883245188', '账号密码登陆', '2019-02-11 09:50:49', NULL);
+INSERT INTO `landingrecord` VALUES (20, '邓占勇', '18883245188', '账号密码登陆', '2019-02-11 09:58:39', '无');
+INSERT INTO `landingrecord` VALUES (21, '测试用户', '18716565374', '账号密码', '2019-02-11 09:59:24', '无');
+INSERT INTO `landingrecord` VALUES (22, '测试用户', '18716565374', '账号密码', '2019-02-11 09:59:55', '无');
+INSERT INTO `landingrecord` VALUES (23, '邓占勇', '18883245188', '账号密码', '2019-02-11 10:00:14', '无');
+INSERT INTO `landingrecord` VALUES (24, '测试用户', '18716565374', '短信验证码', '2019-02-11 10:00:48', '772394');
+INSERT INTO `landingrecord` VALUES (25, '邓占勇', '18883245188', '账号密码', '2019-02-11 15:06:40', '无');
+INSERT INTO `landingrecord` VALUES (26, '测试用户', '18716565374', '短信验证码', '2019-02-11 15:37:11', '199780');
+INSERT INTO `landingrecord` VALUES (27, '邓占勇', '18883245188', '短信验证码', '2019-02-11 15:42:50', '762921');
+INSERT INTO `landingrecord` VALUES (28, '测试用户', '18716565374', '短信验证码', '2019-02-11 15:46:10', '816192');
+INSERT INTO `landingrecord` VALUES (29, '邓占勇', '18883245188', '短信验证码', '2019-02-11 15:47:04', '265814');
+INSERT INTO `landingrecord` VALUES (30, '测试用户', '18716565374', '账号密码', '2019-02-11 15:52:51', '无');
+INSERT INTO `landingrecord` VALUES (31, '邓占勇', '18883245188', '账号密码', '2019-02-11 16:46:16', '无');
+INSERT INTO `landingrecord` VALUES (32, '邓占勇', '18883245188', '账号密码', '2019-02-11 17:17:01', '无');
+INSERT INTO `landingrecord` VALUES (33, '测试用户', '18716565374', '账号密码', '2019-02-11 17:19:44', '无');
+INSERT INTO `landingrecord` VALUES (34, '邓占勇', '18883245188', '短信验证码', '2019-02-12 09:38:57', '865097');
+INSERT INTO `landingrecord` VALUES (35, '邓占勇', '18883245188', '短信验证码', '2019-02-12 09:47:28', '732795');
+INSERT INTO `landingrecord` VALUES (36, '测试用户', '18716565374', '账号密码', '2019-02-12 09:50:11', '无');
+INSERT INTO `landingrecord` VALUES (37, '测试用户', '18716565374', '账号密码', '2019-02-12 10:02:04', '无');
+INSERT INTO `landingrecord` VALUES (38, '邓占勇', '18883245188', '短信验证码', '2019-02-12 15:05:26', '404921');
 
 SET FOREIGN_KEY_CHECKS = 1;
