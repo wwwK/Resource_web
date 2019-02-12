@@ -62,9 +62,9 @@ export default {
       var dom = document.getElementById("Browse");
       let myChart = this.$echarts.init(dom);
       var data = this.getVirtulData(2019);
-      var maxdata = data.sort((a,b)=>{
+      var maxdata = data.sort((a, b) => {
         return b[1] - a[1];
-      })[0];
+      })[0]; //得到最大值
 
       var option = {
         backgroundColor: "#404a59",
@@ -78,9 +78,6 @@ export default {
             color: "#fff"
           }
         },
-        tooltip: {
-          trigger: "item"
-        },
         legend: {
           top: "30",
           left: "100",
@@ -92,7 +89,7 @@ export default {
         calendar: [
           {
             top: 100,
-            left: 'center',
+            left: "center",
             cellSize: 23,
             range: ["2019-01-01", "2019-6-30"],
             splitLine: {
@@ -122,13 +119,33 @@ export default {
           }
         ],
         tooltip: {
-          //trigger: "item",
-          formatter:(params)=>{
-            return `${params.data[0]}<br />${params.marker}浏览量：${params.data[1]}次<br />${params.marker}全年排名：${ (params.dataIndex + 1)}`;
+          formatter: params => {
+            return `${params.data[0]}<br />${params.marker}浏览量：${
+              params.data[1]
+            }次<br />${params.marker}全年排名：${params.dataIndex + 1}`;
           },
-          backgroundColor:'rgba(100,100,100,0.5)',
-          borderColor:'rgba(100,100,100,0.1)',
-          borderWidth:2
+          backgroundColor: "rgba(100,100,100,0.5)",
+          borderColor: "rgba(100,100,100,0.1)",
+          borderWidth: 2
+        },
+        visualMap: {
+          //视觉映射组件
+          min: 0,
+          max: maxdata[1],
+          type: "continuous",
+          itemHeight:160,
+          range: [0, maxdata[1]],
+          calculable: true,
+          align: "left",
+          text: ["High", "Low"],
+          right: 60,
+          top: 72,
+          inRange: {
+            color: ["rgb(221,185,38)", "rgb(221,185,38)", "rgb(194,53,49)"]
+          },
+          textStyle: {
+            color: "#fff"
+          }
         },
         series: [
           //系列列表。每个系列通过 type 决定自己的图表类型
@@ -138,7 +155,7 @@ export default {
             coordinateSystem: "calendar",
             data: data,
             symbolSize: function(val) {
-              return Math.floor(val[1]*18/maxdata[1]);
+              return Math.floor((val[1] * 18) / (maxdata[1] + 5)) + 5;
             },
             itemStyle: {
               normal: {
@@ -148,7 +165,7 @@ export default {
           },
           {
             name: "Top 3",
-            type: "effectScatter",
+            type: "heatmap",
             coordinateSystem: "calendar",
             data: data
               .sort(function(a, b) {
@@ -156,7 +173,7 @@ export default {
               })
               .slice(0, 3),
             symbolSize: function(val) {
-              return  Math.floor(val[1]*18/maxdata[1]);
+              return Math.floor((val[1] * 18) / maxdata[1]);
             },
             showEffectOn: "render", //何时显示特效
             rippleEffect: {
@@ -172,7 +189,17 @@ export default {
             },
             zlevel: 1
           }
-        ]
+        ],
+        toolbox: {
+          show: true,
+          feature: {
+            mark: { show: true },
+            dataView: { show: true, readOnly: false },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          },
+          right: 30,
+        }
       };
 
       myChart.setOption(option);
@@ -181,11 +208,7 @@ export default {
       var time = {};
       for (var i = 0; i < this.browser.length; i++) {
         var date = this.browser[i].created_at.split(" ")[0];
-        if (time[date]) {
-          time[date]++;
-        } else {
-          time[date] = 1;
-        }
+        time[date] ? time[date]++ : (time[date] = 1);
       }
       var data = [];
       for (const date in time) {
