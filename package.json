@@ -10,7 +10,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "css-loader": "^2.1.0",
-    "echarts": "^4.2.0-rc.2",
+    "echarts": "^4.1.0",
     "ele": "0.0.1",
     "element-ui": "^2.4.11",
     "jquery": "^3.3.1",
@@ -20,7 +20,8 @@
     "stylus-loader": "^3.0.2",
     "vue": "^2.5.21",
     "vue-awesome-swiper": "^2.5.4",
-    "vue-router": "^3.0.2"
+    "vue-router": "^3.0.2",
+    "vuex": "^3.1.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.3.0",

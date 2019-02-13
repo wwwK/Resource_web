@@ -12,38 +12,18 @@
 <script>
 export default {
   data: () => ({
-    ClassfiyStatistics: {
-      //统计类型名和对应的元素数量
-      obj: {},
-      type: [],
-      value: []
-    },
     browser: {}
   }),
   mounted: function() {
     this.getData();
   },
+  computed:{
+    ClassfiyStatistics(){
+      return this.$store.state.ClassfiyStatistics;
+    }
+  },
   methods: {
     getData() {
-      this.$.ajax({
-        type: this.api.everyClassNum.type,
-        url: this.api.everyClassNum.url,
-        data: {},
-        success: res => {
-          res = JSON.parse(res);
-          this.ClassfiyStatistics.type = [];
-          this.ClassfiyStatistics.value = [];
-          this.ClassfiyStatistics.obj = res;
-          for (const key in res) {
-            this.ClassfiyStatistics.type.push(key);
-            this.ClassfiyStatistics.value.push(res[key] || 0);
-          }
-          this.drawLine();
-        },
-        error: err => {
-          console.log(err);
-        }
-      });
       this.$.ajax({
         type: this.api.browserSelect.type,
         url: this.api.browserSelect.url,

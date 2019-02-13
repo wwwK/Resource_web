@@ -56,56 +56,25 @@ export default {
       size: "small ",
       options: []
     },
-    haveoptions: [], //已有子元素的类型名
-    elements: [], //存放所有资源元素
     serchContent: "",
     fillterContent: ""
   }),
+  computed:{
+    haveoptions(){
+      return this.$store.state.haveoptions;
+    },
+    elements(){
+      return this.$store.state.elements;
+    },
+  },
   components: {
     Element
-  },
-  created: function() {
-    this.initData();
   },
   methods: {
     toTegional(module) {
       window.location.hash = "#" + module;   //滚动到指定位置
       var top = document.documentElement.scrollTop || document.body.scrollTop;   //获取页面当前的滚动距离
       document.documentElement.scrollTop= top - 65;    //设置页面向下滚动62像素，预留出header的位置
-    },
-    initData() {
-      //获取所有类型
-      axios
-        .get(this.api.classifiesQueryAll.url, {})
-        .then(res => {
-          this.navigation.options = res.data;
-        })
-        .then(() => {
-          this.getElementsData();
-        })
-        .catch(err => {
-          console.log(err);
-        });
-      //查询已有子元素的类型名~
-      axios
-        .get(this.api.elementsHaveType.url, {})
-        .then(res => {
-          this.haveoptions = res.data.types;
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
-    getElementsData() {
-      //获取所有资源元素
-      axios
-        .get(this.api.elementsQueryAll.url, {})
-        .then(res => {
-          this.elements = res.data;
-        })
-        .catch(err => {
-          console.log(err);
-        });
     },
     toSearch() {
       //搜索内容

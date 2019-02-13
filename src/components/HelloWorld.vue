@@ -34,6 +34,9 @@ export default {
     Header,
     Footer
   },
+  created:function(){
+    this.$store.commit('datainit');
+  },
   methods: {
     chengeMain(to) {
       if (to.which == "admin") {

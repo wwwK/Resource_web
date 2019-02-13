@@ -125,7 +125,8 @@ export default {
                   message: res.msg,
                   type: "success"
                 });
-                this.$emit("upAllData"); //重新获取数据
+                //this.$emit("upAllData"); //重新获取数据
+                this.$store.commit('datainit');
               } else {
                 this.$message({
                   message: res.msg,
@@ -238,7 +239,8 @@ export default {
     //操作成功
     successed() {
       this.dialogFormVisible = false; //关闭弹出层
-      this.$emit("upAllData"); //重新获取数据
+      //this.$emit("upAllData"); //重新获取数据
+      this.$store.commit('datainit');
     }
   }
 };

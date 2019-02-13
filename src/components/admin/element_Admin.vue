@@ -241,7 +241,7 @@ export default {
               type: "success",
               message: "删除成功!"
             });
-            this.$emit("upAllData"); //重新获取数据
+            this.$store.commit('datainit');
           }
         })
         .catch(() => {
@@ -303,7 +303,7 @@ export default {
             message: res.msg,
             type: "success"
           });
-          this.$emit("upAllData"); //重新获取数据
+          this.$store.commit('datainit');
         },
         error: err => {
           console.log(err);
@@ -378,7 +378,7 @@ export default {
     //操作成功
     successed() {
       this.dialogFormVisible = false; //关闭弹出层
-      this.$emit("upAllData"); //重新获取数据
+      this.$store.commit('datainit');
       this.imageUrl = ""; //清楚预览图片
       this.resetForm('elementForm');  //重置表单
     }
