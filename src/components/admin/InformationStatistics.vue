@@ -1,11 +1,7 @@
 <template>
     <div class="ss" id="wrapper">
-        <div id="Classfiy">
-            
-        </div>
-        <div id="Browse">
-
-        </div>
+        <div id="Classfiy"></div>
+        <div id="Browse"></div>
     </div>
 </template>
 
@@ -16,6 +12,7 @@ export default {
   }),
   mounted: function() {
     this.getData();
+    this.drawLine();
   },
   computed:{
     ClassfiyStatistics(){

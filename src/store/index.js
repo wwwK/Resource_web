@@ -12,7 +12,8 @@ export default new vuex.Store({
         landingInfo: {    //登陆信息
             states: false,  //登陆状态
             username: '',
-            time: '',
+            loginTime: '',
+            loadingMode: '',
         },
         haveoptions: [], //已存在子元素的类型
         elements: [], //所有子元素
@@ -27,6 +28,11 @@ export default new vuex.Store({
 
     },
     mutations: {
+        //改变登陆状态
+        landingChenge(state,info){
+            state.landingInfo  = info;
+        },
+        //初始化获取信息
         datainit(state) {
             //查询已有子元素的类型名~
             axios
@@ -55,7 +61,7 @@ export default new vuex.Store({
                 .catch(err => {
                     console.log(err);
                 });
-            //获取浏览量统计信息
+            //获取内容统计信息
             $.ajax({
                 type: api.everyClassNum.type,
                 url: api.everyClassNum.url,

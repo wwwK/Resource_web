@@ -81,7 +81,7 @@ export default {
       VerCode: "",
       username: ""
     },
-    timeInterval: '',
+    timeInterval: ""
   }),
   methods: {
     //取消登陆
@@ -113,8 +113,12 @@ export default {
             //获取登录时间
             var time = new Date(new Date().valueOf()).toLocaleString();
             sessionStorage.setItem("username", this.phoneLogoin.username); //保存当前用户名到浏览器
-            sessionStorage.setItem("loginTime", time); //最近一次登录时间
-            sessionStorage.setItem("loadingMode", "手机验证登陆"); //登陆方式
+            this.$store.commit("landingChenge", {
+              states: true, //登陆状态
+              username: this.phoneLogoin.username,
+              loginTime: time,
+              loadingMode: "手机验证登陆"
+            });
             //向父组件传值
             this.$emit("CloseDialog", {
               state: false,
@@ -224,12 +228,15 @@ export default {
                   message: res.msg
                 });
                 this.$refs["passwordFrom"].resetFields(); //重置表单，保护信息
-
                 //获取登录时间
                 var time = new Date(new Date().valueOf()).toLocaleString();
                 sessionStorage.setItem("username", res.name); //保存当前用户名到浏览器
-                sessionStorage.setItem("loginTime", time); //最近一次登录时间
-                sessionStorage.setItem("loadingMode", "账号密码登陆"); //登陆方式
+                this.$store.commit("landingChenge", {
+                  states: true, //登陆状态
+                  username: res.name,
+                  loginTime: time,
+                  loadingMode: "账号密码登陆"
+                });
                 //向父组件传值
                 this.$emit("CloseDialog", { state: false, username: res.name });
                 this.saveLoadingRecord("账号密码", res.name); //保存登陆记录

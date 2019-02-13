@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import LoginGUL from './loginDialog'
+import LoginGUL from "./loginDialog";
 
 export default {
   data: () => ({
@@ -23,27 +23,27 @@ export default {
     loginDialog: false,
     username: ""
   }),
-  components:{
+  components: {
     LoginGUL
   },
   created: function() {
-    this.username = sessionStorage.getItem("username");
+    this.username = sessionStorage.getItem('username');
   },
   methods: {
     //显示登陆信息
-    logoin(){
-      var user = sessionStorage.getItem("username");
-      var loginTime = sessionStorage.getItem("loginTime");
-      var loadingMode = sessionStorage.getItem("loadingMode");
-      if(user){
+    logoin() {
+      var user = this.$store.state.landingInfo.username;
+      var loginTime = this.$store.state.landingInfo.loginTime;
+      var loadingMode = this.$store.state.landingInfo.loadingMode;
+      if (user) {
         this.$notify({
-          title: '登录信息',
-          type: 'warning',
+          title: "登录信息",
+          type: "warning",
           dangerouslyUseHTMLString: true,
-          message:`<p>用户名：${user}</p><p>登录时间:${loginTime}</p><p>登陆方式：${loadingMode}</p>`,
+          message: `<p>用户名：${user}</p><p>登录时间:${loginTime}</p><p>登陆方式：${loadingMode}</p>`,
           offset: 100
         });
-      }else{
+      } else {
         this.loginDialog = true;
       }
     },
@@ -51,11 +51,17 @@ export default {
       //退出登陆
       this.username = "";
       sessionStorage.removeItem("username");
+      this.$store.commit("landingChenge", {
+        states: false, //登陆状态
+        username: '',
+        loginTime: '',
+        loadingMode: ""
+      });
     },
     //关闭弹出层
-    CloseDialog(res){
-      this.loginDialog = res.state;
-      this.username = res.username || '';
+    CloseDialog(res) {
+       this.loginDialog = res.state;
+       this.username = res.username || "";
     },
 
     goBack() {
@@ -72,24 +78,27 @@ export default {
 
 <style lang="stylus" scoped>
 .header {
-  background :#409EFF;
+  background: #409EFF;
   height: 100%;
   overflow: hidden;
+
   .top-menu {
     padding: 0 auto;
-    height :100%;
+    height: 100%;
+
     .logo-wrapper {
-      height :100%;
-      text-align :left;
+      height: 100%;
+      text-align: left;
+
       .title {
-        position : absolute;
+        position: absolute;
         top: 30%;
-        margin-left:0.5em;
+        margin-left: 0.5em;
         cursor: pointer;
         line-height: 100%;
         font-size: 25px;
         font-weight: 700;
-        cursor: pointer; 
+        cursor: pointer;
       }
     }
   }
