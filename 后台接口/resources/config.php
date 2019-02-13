@@ -1,10 +1,11 @@
 <?php
 $config = array(
 	'host'=>'localhost',
+	//'host'=>'39.108.168.243',
 	'dbname'=>'root',
 	'dbpassword'=>'',   //mysql密码
+	//'dbpassword'=>'e78e0789b9fb',
 );
-
 
 $dbhost = $config['host']; //服务器主机地址
 $dbname = $config['dbname']; //mysql用户名
