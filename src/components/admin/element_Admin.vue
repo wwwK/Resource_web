@@ -198,7 +198,6 @@ export default {
     //分页改变
     handleCurrentChange(size) {
       this.currentPage = size;
-      console.log(this.elements.length, this.pageSize);
     },
     //图片上传成功
     handleAvatarSuccess(res) {

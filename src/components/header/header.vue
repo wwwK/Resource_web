@@ -2,7 +2,7 @@
   <div class="header">
     <el-row class="top-menu">
       <el-col :span="12" class="logo-wrapper">
-        <span @click="to('main')" class="title">邓占勇的资源空间</span>
+        <span @click="to('main')" class="title">资源空间</span>
       </el-col>
       <el-col :sm="12" style="text-align:right;margin-top:13px;padding-right:0.5em;">
         <el-button size="mini" class="login" @click="logoin">{{username || '登陆'}}</el-button>

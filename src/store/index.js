@@ -1,9 +1,7 @@
 import vue from 'vue'
 import vuex from 'vuex'
 import axios from "axios";
-import $ from 'jquery'
 import api from '../apiconfig'
-
 
 vue.use(vuex);
 
@@ -61,25 +59,6 @@ export default new vuex.Store({
                 .catch(err => {
                     console.log(err);
                 });
-            //获取内容统计信息
-            $.ajax({
-                type: api.everyClassNum.type,
-                url: api.everyClassNum.url,
-                data: {},
-                success: res => {
-                    res = JSON.parse(res);
-                    state.ClassfiyStatistics.type = [];
-                    state.ClassfiyStatistics.value = [];
-                    state.ClassfiyStatistics.obj = res;
-                    for (const key in res) {
-                        state.ClassfiyStatistics.type.push(key);
-                        state.ClassfiyStatistics.value.push(res[key] || 0);
-                    }
-                },
-                error: err => {
-                    console.log(err);
-                }
-            });
         }
     }
 });

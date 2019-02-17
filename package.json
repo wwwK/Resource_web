@@ -10,7 +10,6 @@
   "dependencies": {
     "axios": "^0.18.0",
     "css-loader": "^2.1.0",
-    "echarts": "^4.1.0",
     "ele": "0.0.1",
     "element-ui": "^2.4.11",
     "jquery": "^3.3.1",

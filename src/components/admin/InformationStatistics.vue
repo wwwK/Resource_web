@@ -8,19 +8,39 @@
 <script>
 export default {
   data: () => ({
-    browser: {}
+    browser: {},
+    ClassfiyStatistics: {
+      type:[],
+      value:[],
+      obj:[],
+    }
   }),
   mounted: function() {
     this.getData();
-    this.drawLine();
-  },
-  computed:{
-    ClassfiyStatistics(){
-      return this.$store.state.ClassfiyStatistics;
-    }
   },
   methods: {
     getData() {
+      //获取内容统计信息
+      this.$.ajax({
+        type: this.api.everyClassNum.type,
+        url: this.api.everyClassNum.url,
+        data: {},
+        success: res => {
+          res = JSON.parse(res);
+          this.ClassfiyStatistics.type = [];
+          this.ClassfiyStatistics.value = [];
+          this.ClassfiyStatistics.obj = res;
+          for (const key in res) {
+            this.ClassfiyStatistics.type.push(key);
+            this.ClassfiyStatistics.value.push(res[key] || 0);
+          }
+          this.drawLine();
+        },
+        error: err => {
+          console.log(err);
+        }
+      });
+      //访客记录数据
       this.$.ajax({
         type: this.api.browserSelect.type,
         url: this.api.browserSelect.url,
@@ -110,7 +130,7 @@ export default {
           min: 0,
           max: maxdata[1],
           type: "continuous",
-          itemHeight:160,
+          itemHeight: 160,
           range: [0, maxdata[1]],
           calculable: true,
           align: "left",
@@ -175,7 +195,7 @@ export default {
             restore: { show: true },
             saveAsImage: { show: true }
           },
-          right: 30,
+          right: 30
         }
       };
 

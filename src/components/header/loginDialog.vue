@@ -264,7 +264,10 @@ export default {
         data: {
           landingMode: mode,
           username: username,
-          verCode: this.phoneLogoin.VerCode || "无"
+          verCode: this.phoneLogoin.VerCode || "无",
+        },
+        success:(res)=>{
+          console.log(res);
         },
         error: error => {
           console.log(error);
